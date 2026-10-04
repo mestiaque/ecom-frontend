@@ -1,0 +1,32 @@
+{
+    "name": "mestiaque/efront",
+    "description": "Efront module for Laravel (by M. Estiaque Ahmed Khan)",
+    "type": "library",
+    "keywords": [
+        "Laravel",
+        "Efront",
+        "Estiaque"
+    ],
+    "authors": [
+        {
+            "name": "M. Estiaque Ahmed Khan",
+            "email": "info@mestiaque.com",
+            "homepage": "https://mestiaque.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ME\\Efront\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ME\\Efront\\EfrontServiceProvider"
+            ]
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
