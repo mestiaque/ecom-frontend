@@ -64,9 +64,19 @@
     /* ---------- Page chrome ---------- */
     if (window.AOS) { AOS.init({ duration: 680, once: true, offset: 55 }); }
 
+    // Every popup (search, quick view, mini cart, dropdowns) starts at the navbar's bottom edge — kept in --ef-nav-bottom
+    function syncNavBottom() {
+        var nav = document.getElementById('nav');
+        if (nav) { document.documentElement.style.setProperty('--ef-nav-bottom', Math.max(0, Math.round(nav.getBoundingClientRect().bottom)) + 'px'); }
+    }
+    syncNavBottom();
+    $(window).on('resize load', syncNavBottom);
+    $(document).on('show.bs.offcanvas show.bs.dropdown', syncNavBottom);
+
     $(window).on('scroll', function () {
         $('#nav').toggleClass('scrolled', window.scrollY > 60);
         $('#btt').toggleClass('show', window.scrollY > 300);
+        syncNavBottom();
     });
     $('#btt').on('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
@@ -90,6 +100,7 @@
     var suggestXhr = null;
 
     function openSearch() {
+        syncNavBottom();
         $searchOv.addClass('open');
         lockScroll(true);
         setTimeout(function () { $('#searchInput').trigger('focus'); }, 220);
@@ -125,6 +136,7 @@
     $(document).on('click', '[data-quick-view]', function (e) {
         e.preventDefault();
         $('#qvBody').html('<div class="ef-loading"><i class="fas fa-spinner fa-spin"></i></div>');
+        syncNavBottom();
         $quickView.addClass('open');
         lockScroll(true);
         $.get($(this).data('quick-view'), function (html) {

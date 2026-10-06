@@ -51,10 +51,10 @@
     <div class="ef-buy-row">
         <x-efront::qty :max="$product->has_variants ? config('efront.max_quantity') : min($product->stock, config('efront.max_quantity'))" />
         <button type="submit" class="mpaddcart ef-addcart" @disabled($unavailable) data-add-to-cart>
-            <i class="fas fa-shopping-cart"></i>Add to Cart
+            {{ efront_theme()->buttonContent('add_to_cart') }}
         </button>
         <button type="submit" name="buy_now" value="1" class="ef-buynow" @disabled($unavailable)>
-            <i class="fas fa-bolt"></i>Buy Now
+            {{ efront_theme()->buttonContent('buy_now') }}
         </button>
         <x-efront::wishlist-button :product="$product" class="ef-wish-lg" />
     </div>

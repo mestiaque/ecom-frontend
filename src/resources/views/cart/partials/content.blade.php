@@ -84,7 +84,7 @@
 
                 <div class="ef-sum-row text-muted"><span>Delivery</span><span>Calculated at checkout</span></div>
                 <div class="ef-sum-row ef-sum-total"><span>Total</span><strong>{{ ecom_money($total) }}</strong></div>
-                <a href="{{ route('efront.checkout') }}" class="btn-red w-100 justify-content-center mt-3"><i class="fas fa-lock"></i>Proceed to Checkout</a>
+                <a href="{{ route('efront.checkout') }}" class="btn-red ef-btn-checkout w-100 justify-content-center mt-3">{{ efront_theme()->buttonContent('checkout') }}</a>
             </div>
         </div>
     </div>

@@ -12,11 +12,11 @@
                 <form method="POST" action="{{ route('efront.account.avatar.update') }}" enctype="multipart/form-data" data-avatar-form>
                     @csrf
                     <label class="btn-red ef-btn-file">
-                        <i class="fas fa-camera"></i>{{ $customer->avatar ? 'Change photo' : 'Upload photo' }}
+                        <i class="fas fa-camera"></i>{{ $customer->avatar_url ? 'Change photo' : 'Upload photo' }}
                         <input type="file" name="avatar" accept="image/jpeg,image/png,image/webp" data-avatar-input hidden>
                     </label>
                 </form>
-                @if($customer->avatar)
+                @if($customer->avatar_url)
                     <form method="POST" action="{{ route('efront.account.avatar.remove') }}" class="d-inline">
                         @csrf
                         @method('DELETE')

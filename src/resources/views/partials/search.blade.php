@@ -1,6 +1,6 @@
 <div id="searchOv">
-    <button class="sovclose" type="button" data-search-close aria-label="Close"><i class="fas fa-times"></i></button>
     <div class="sovbox">
+        <button class="sovclose" type="button" data-search-close aria-label="Close"><i class="fas fa-times"></i></button>
         <h4>What are you looking for?</h4>
         <form class="sovinput" action="{{ route('efront.shop') }}" method="GET" role="search">
             <input type="text" name="q" id="searchInput" placeholder="Search products, brands..." autocomplete="off" value="{{ request('q') }}">
@@ -11,8 +11,8 @@
             <div class="sovcats">
                 @foreach(efront()->menuCategories()->take(7) as $searchCategory)
                     <a class="sovcat" href="{{ route('efront.category', $searchCategory) }}">
-                        @if($searchCategory->image)
-                            <img src="{{ ecom_image($searchCategory->image) }}" alt="">
+                        @if($searchCategory->image_url)
+                            <img src="{{ $searchCategory->image_url }}" alt="">
                         @endif
                         {{ $searchCategory->name }}
                     </a>

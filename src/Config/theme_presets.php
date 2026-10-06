@@ -1,0 +1,129 @@
+<?php
+
+/*
+| Ready-made storefront looks (Admin → Storefront Theme → Presets). Applying one copies these values over
+| the current theme as a draft — texts, sections, button labels and icons are kept.
+| Only style / fonts / colours are set here; anything missing keeps its current value.
+*/
+
+$buttons = fn (string $main, string $mainText, string $buy, string $buyText) => [
+    'primary' => ['bg' => $main, 'text' => $mainText],
+    'add_to_cart' => ['bg' => $main, 'text' => $mainText],
+    'buy_now' => ['bg' => $buy, 'text' => $buyText],
+    'quick_add' => ['bg' => $main, 'text' => $mainText],
+    'checkout' => ['bg' => $main, 'text' => $mainText],
+    'place_order' => ['bg' => $main, 'text' => $mainText],
+];
+
+return [
+    'glass_red' => [
+        'name' => 'Glass Red',
+        'description' => 'The default look — frosted glass, red & amber glow.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Plus Jakarta Sans', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#e8281a', 'secondary' => '#f6a623', 'heading' => '#1a1a1a', 'text' => '#555555', 'price' => '#e8281a', 'label' => '#e8281a', 'category_label' => '#f6a623'],
+            'glass' => ['bg_1' => '#fff4ee', 'bg_2' => '#fdf0f6', 'bg_3' => '#f2efff', 'bg_4' => '#eaf8fc', 'orb_1' => '#ff3d2e', 'orb_2' => '#8b5cf6', 'orb_3' => '#ffb020', 'orb_4' => '#22d3ee', 'orb_5' => '#ec4899', 'glow' => 75],
+            'header' => ['topbar_bg' => '#111111', 'topbar_text' => '#bbbbbb', 'navbar_bg' => '#ffffff', 'navbar_text' => '#1a1a1a', 'pagehead_bg' => '#2d0000', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#1a1a1a', 'text' => '#999999', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#e8281a', '#ffffff', '#f6a623', '#1a1a1a'),
+            'card' => ['image_bg' => '#ffffff'],
+        ],
+    ],
+    'minimal_black' => [
+        'name' => 'Minimal Black',
+        'description' => 'Clean classic white with black buttons — premium & simple.',
+        'settings' => [
+            'style' => 'classic',
+            'fonts' => ['heading' => 'Manrope', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#111111', 'secondary' => '#9a7b4f', 'heading' => '#111111', 'text' => '#4b5563', 'price' => '#111111', 'label' => '#6b7280', 'category_label' => '#9a7b4f'],
+            'header' => ['topbar_bg' => '#111111', 'topbar_text' => '#d1d5db', 'navbar_bg' => '#ffffff', 'navbar_text' => '#111111', 'pagehead_bg' => '#1f2937', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#0b0b0b', 'text' => '#9ca3af', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#111111', '#ffffff', '#9a7b4f', '#ffffff'),
+            'card' => ['image_bg' => '#f5f5f4'],
+        ],
+    ],
+    'fresh_green' => [
+        'name' => 'Fresh Green',
+        'description' => 'Light glass with green & lime — groceries, organic, health.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Outfit', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#16a34a', 'secondary' => '#f59e0b', 'heading' => '#14281d', 'text' => '#4b5a50', 'price' => '#15803d', 'label' => '#16a34a', 'category_label' => '#d97706'],
+            'glass' => ['bg_1' => '#f0fdf4', 'bg_2' => '#ecfeff', 'bg_3' => '#fefce8', 'bg_4' => '#f0fdfa', 'orb_1' => '#22c55e', 'orb_2' => '#14b8a6', 'orb_3' => '#facc15', 'orb_4' => '#84cc16', 'orb_5' => '#06b6d4', 'glow' => 65],
+            'header' => ['topbar_bg' => '#052e16', 'topbar_text' => '#bbf7d0', 'navbar_bg' => '#ffffff', 'navbar_text' => '#14281d', 'pagehead_bg' => '#064e3b', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#052e16', 'text' => '#a7c4b2', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#16a34a', '#ffffff', '#f59e0b', '#1a1a1a'),
+            'card' => ['image_bg' => '#ffffff'],
+        ],
+    ],
+    'ocean_blue' => [
+        'name' => 'Ocean Blue',
+        'description' => 'Cool blue glass — electronics, gadgets, tech.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Plus Jakarta Sans', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#2563eb', 'secondary' => '#06b6d4', 'heading' => '#0f172a', 'text' => '#475569', 'price' => '#1d4ed8', 'label' => '#2563eb', 'category_label' => '#0891b2'],
+            'glass' => ['bg_1' => '#eff6ff', 'bg_2' => '#ecfeff', 'bg_3' => '#eef2ff', 'bg_4' => '#f0f9ff', 'orb_1' => '#3b82f6', 'orb_2' => '#8b5cf6', 'orb_3' => '#06b6d4', 'orb_4' => '#22d3ee', 'orb_5' => '#6366f1', 'glow' => 70],
+            'header' => ['topbar_bg' => '#0f172a', 'topbar_text' => '#cbd5e1', 'navbar_bg' => '#ffffff', 'navbar_text' => '#0f172a', 'pagehead_bg' => '#0c1e4a', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#0b1226', 'text' => '#94a3b8', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#2563eb', '#ffffff', '#06b6d4', '#0f172a'),
+            'card' => ['image_bg' => '#ffffff'],
+        ],
+    ],
+    'royal_purple' => [
+        'name' => 'Royal Purple',
+        'description' => 'Purple & pink glass — fashion, beauty, cosmetics.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Urbanist', 'body' => 'DM Sans', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#7c3aed', 'secondary' => '#ec4899', 'heading' => '#1e1033', 'text' => '#5b5470', 'price' => '#7c3aed', 'label' => '#db2777', 'category_label' => '#db2777'],
+            'glass' => ['bg_1' => '#faf5ff', 'bg_2' => '#fdf2f8', 'bg_3' => '#f5f3ff', 'bg_4' => '#fff1f2', 'orb_1' => '#a855f7', 'orb_2' => '#ec4899', 'orb_3' => '#f472b6', 'orb_4' => '#818cf8', 'orb_5' => '#c084fc', 'glow' => 75],
+            'header' => ['topbar_bg' => '#1e1033', 'topbar_text' => '#e9d5ff', 'navbar_bg' => '#ffffff', 'navbar_text' => '#1e1033', 'pagehead_bg' => '#3b0764', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#170b29', 'text' => '#b9a8d6', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#7c3aed', '#ffffff', '#ec4899', '#ffffff'),
+            'card' => ['image_bg' => '#ffffff'],
+        ],
+    ],
+    'eid' => [
+        'name' => 'Eid Mubarak',
+        'description' => 'Deep green & gold — for Eid campaigns.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Plus Jakarta Sans', 'body' => 'Inter', 'label_style' => 'script'],
+            'colors' => ['primary' => '#047857', 'secondary' => '#d4a017', 'heading' => '#0b2a1f', 'text' => '#45584f', 'price' => '#047857', 'label' => '#b8860b', 'category_label' => '#b8860b'],
+            'glass' => ['bg_1' => '#ecfdf5', 'bg_2' => '#fefce8', 'bg_3' => '#f0fdfa', 'bg_4' => '#fffbeb', 'orb_1' => '#10b981', 'orb_2' => '#d4a017', 'orb_3' => '#fbbf24', 'orb_4' => '#14b8a6', 'orb_5' => '#a3e635', 'glow' => 70],
+            'header' => ['topbar_bg' => '#022c22', 'topbar_text' => '#fde68a', 'navbar_bg' => '#ffffff', 'navbar_text' => '#0b2a1f', 'pagehead_bg' => '#064e3b', 'pagehead_text' => '#fef3c7'],
+            'footer' => ['bg' => '#022c22', 'text' => '#a7c4b2', 'heading' => '#fde68a'],
+            'buttons' => $buttons('#047857', '#ffffff', '#d4a017', '#1a1a1a'),
+            'card' => ['image_bg' => '#ffffff'],
+        ],
+    ],
+    'puja' => [
+        'name' => 'Puja Festive',
+        'description' => 'Vermilion & saffron — for Durga Puja offers.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Outfit', 'body' => 'Inter', 'label_style' => 'script'],
+            'colors' => ['primary' => '#c2410c', 'secondary' => '#eab308', 'heading' => '#2a0f05', 'text' => '#5c4636', 'price' => '#c2410c', 'label' => '#dc2626', 'category_label' => '#ca8a04'],
+            'glass' => ['bg_1' => '#fff7ed', 'bg_2' => '#fef2f2', 'bg_3' => '#fefce8', 'bg_4' => '#fff1f2', 'orb_1' => '#f97316', 'orb_2' => '#dc2626', 'orb_3' => '#facc15', 'orb_4' => '#fb7185', 'orb_5' => '#f59e0b', 'glow' => 80],
+            'header' => ['topbar_bg' => '#450a0a', 'topbar_text' => '#fde68a', 'navbar_bg' => '#ffffff', 'navbar_text' => '#2a0f05', 'pagehead_bg' => '#7f1d1d', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#2a0a0a', 'text' => '#d6b4a2', 'heading' => '#fde68a'],
+            'buttons' => $buttons('#c2410c', '#ffffff', '#eab308', '#1a1a1a'),
+            'card' => ['image_bg' => '#ffffff'],
+        ],
+    ],
+    'boishakh' => [
+        'name' => 'Pohela Boishakh',
+        'description' => 'Classic red & white with clean type — Bangla New Year.',
+        'settings' => [
+            'style' => 'classic',
+            'fonts' => ['heading' => 'Hind Siliguri', 'body' => 'Hind Siliguri', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#b91c1c', 'secondary' => '#f59e0b', 'heading' => '#1c1917', 'text' => '#57534e', 'price' => '#b91c1c', 'label' => '#b91c1c', 'category_label' => '#b45309'],
+            'header' => ['topbar_bg' => '#7f1d1d', 'topbar_text' => '#fee2e2', 'navbar_bg' => '#ffffff', 'navbar_text' => '#1c1917', 'pagehead_bg' => '#991b1b', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#450a0a', 'text' => '#fecaca', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#b91c1c', '#ffffff', '#f59e0b', '#1c1917'),
+            'card' => ['image_bg' => '#fffaf5'],
+        ],
+    ],
+];

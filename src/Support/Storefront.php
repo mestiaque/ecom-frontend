@@ -54,7 +54,7 @@ class Storefront
 
     public function logoUrl(): ?string
     {
-        return ecom_image(ecom_setting('store_logo'));
+        return get_image('ecom_store_logo'); // image setting in me_media (metheme)
     }
 
     /**
@@ -80,7 +80,7 @@ class Storefront
         // products_count includes the products of active subcategories
         return $this->menuCategories ??= Category::active()
             ->whereNull('parent_id')
-            ->with(['children' => fn ($q) => $q->where('is_active', true)->withCount(['products' => $activeProducts])])
+            ->with(['media', 'children' => fn ($q) => $q->where('is_active', true)->with('media')->withCount(['products' => $activeProducts])])
             ->withCount(['products' => $activeProducts])
             ->orderBy('sort_order')
             ->orderBy('name')

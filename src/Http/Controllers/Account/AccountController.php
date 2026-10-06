@@ -5,7 +5,6 @@ namespace ME\Efront\Http\Controllers\Account;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
@@ -69,27 +68,15 @@ class AccountController extends Controller
             'avatar' => 'required|image|mimes:jpg,jpeg,png,webp|max:'.config('efront.avatar_max_kb', 2048),
         ], ['avatar.max' => 'The photo must be smaller than '.round(config('efront.avatar_max_kb', 2048) / 1024, 1).' MB.']);
 
-        $customer = efront()->customer();
-        $old = $customer->avatar;
-
-        $customer->update(['avatar' => $request->file('avatar')->store(config('ecom.upload_dir', 'ecom').'/customers', 'public')]);
-
-        if ($old && ! str_starts_with($old, 'http')) {
-            Storage::disk('public')->delete($old);
-        }
+        // Photo is kept in me_media (metheme); the old one goes to the media trash
+        efront()->customer()->replaceMedia($request->file('avatar'), 'avatar');
 
         return back()->with('success', 'Your profile photo has been updated.');
     }
 
     public function removeAvatar(): RedirectResponse
     {
-        $customer = efront()->customer();
-
-        if ($customer->avatar && ! str_starts_with($customer->avatar, 'http')) {
-            Storage::disk('public')->delete($customer->avatar);
-        }
-
-        $customer->update(['avatar' => null]);
+        efront()->customer()->clearMedia('avatar');
 
         return back()->with('success', 'Your profile photo has been removed.');
     }

@@ -1,0 +1,518 @@
+/*
+| Efront — Glassmorphism theme
+| Loaded after style.css / efront.css when the storefront theme style is "glass" (body.ef-glass).
+| Colours come from CSS variables set by Admin → Storefront Theme (ME\\Efront\\Support\\Theme::css()).
+| Only colours, transparency, blur, borders and shadows change — no sizes or layout.
+*/
+
+body.ef-glass {
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-bg-strong: rgba(255, 255, 255, 0.72);
+    --glass-bg-soft: rgba(255, 255, 255, 0.38);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-border-soft: rgba(255, 255, 255, 0.45);
+    --glass-blur: blur(18px) saturate(170%);
+    --glass-blur-sm: blur(10px) saturate(160%);
+    --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    --glass-shadow: 0 1px 2px rgba(17, 12, 46, 0.04), 0 8px 24px rgba(17, 12, 46, 0.07), 0 24px 48px -12px rgba(120, 40, 60, 0.12);
+    --glass-shadow-hover: 0 2px 4px rgba(17, 12, 46, 0.05), 0 14px 34px rgba(17, 12, 46, 0.1), 0 34px 64px -14px rgba(var(--ef-primary-rgb),  0.22);
+    --glass-dark: rgba(22, 10, 14, 0.72);
+    --glass-dark-border: rgba(255, 255, 255, 0.12);
+    --glow-primary: 0 8px 24px -4px rgba(var(--ef-primary-rgb),  0.45);
+    --glow-secondary: 0 8px 24px -4px rgba(var(--ef-secondary-rgb),  0.5);
+
+    background: linear-gradient(135deg, var(--ef-bg-1, #fff4ee) 0%, var(--ef-bg-2, #fdf0f6) 32%, var(--ef-bg-3, #f2efff) 66%, var(--ef-bg-4, #eaf8fc) 100%) fixed;
+    color: var(--ef-text, #3d3d46);
+}
+
+/* ---------- Glowing background ---------- */
+.ef-glass-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+.ef-glass-bg span {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: var(--ef-glow-opacity, 0.75);
+    will-change: transform;
+    animation: ef-orb-float 26s ease-in-out infinite alternate;
+}
+.ef-glass-bg .ef-orb-1 { width: 520px; height: 520px; top: -140px; left: -120px; background: radial-gradient(circle, var(--ef-orb-1, #ff3d2e), transparent 70%); }
+.ef-glass-bg .ef-orb-2 { width: 460px; height: 460px; top: 18%; right: -140px; background: radial-gradient(circle, var(--ef-orb-2, #8b5cf6), transparent 70%); animation-duration: 32s; animation-delay: -6s; }
+.ef-glass-bg .ef-orb-3 { width: 420px; height: 420px; bottom: -120px; left: 22%; background: radial-gradient(circle, var(--ef-orb-3, #ffb020), transparent 70%); animation-duration: 28s; animation-delay: -12s; }
+.ef-glass-bg .ef-orb-4 { width: 380px; height: 380px; bottom: 8%; right: 12%; background: radial-gradient(circle, var(--ef-orb-4, #22d3ee), transparent 70%); animation-duration: 34s; animation-delay: -18s; opacity: calc(var(--ef-glow-opacity, 0.75) * 0.8); }
+.ef-glass-bg .ef-orb-5 { width: 300px; height: 300px; top: 42%; left: 38%; background: radial-gradient(circle, var(--ef-orb-5, #ec4899), transparent 70%); animation-duration: 38s; animation-delay: -9s; opacity: calc(var(--ef-glow-opacity, 0.75) * 0.66); }
+
+@keyframes ef-orb-float {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(60px, 40px, 0) scale(1.08); }
+    100% { transform: translate3d(-40px, 70px, 0) scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ef-glass-bg span { animation: none; }
+}
+@media (max-width: 767px) {
+    .ef-glass-bg span { filter: blur(70px); }
+    .ef-glass-bg .ef-orb-1 { width: 340px; height: 340px; }
+    .ef-glass-bg .ef-orb-2 { width: 300px; height: 300px; }
+    .ef-glass-bg .ef-orb-3, .ef-glass-bg .ef-orb-4 { width: 260px; height: 260px; }
+    .ef-glass-bg .ef-orb-5 { display: none; }
+}
+
+/* ---------- Sections: let the glow through ---------- */
+.ef-glass #hero,
+.ef-glass #category,
+.ef-glass #about,
+.ef-glass #menu,
+.ef-glass #gallery,
+.ef-glass #history,
+.ef-glass #chefs,
+.ef-glass #testimonials,
+.ef-glass #reservation,
+.ef-glass #blog,
+.ef-glass #contact-section,
+.ef-glass .ef-features,
+.ef-glass .ef-brands,
+.ef-glass .ef-shop,
+.ef-glass .ef-cart,
+.ef-glass .ef-checkout,
+.ef-glass .ef-account,
+.ef-glass .ef-page,
+.ef-glass .ef-success,
+.ef-glass .ef-auth,
+.ef-glass .ef-error-page,
+.ef-glass .ef-error-minimal,
+body.ef-glass.ef-error-minimal,
+.ef-glass .ef-product,
+.ef-glass .ef-related,
+.ef-glass .ef-arrivals,
+.ef-glass .ef-lists,
+.ef-glass .ef-promos {
+    background: transparent;
+}
+.ef-glass .ef-features { border-bottom-color: var(--glass-border-soft); }
+
+/* ---------- Glass surfaces (cards & panels) ---------- */
+.ef-glass .fcard,
+.ef-glass .mcard,
+.ef-glass .catcard,
+.ef-glass .chcard,
+.ef-glass .blcard,
+.ef-glass .tescard,
+.ef-glass .hbadge,
+.ef-glass .ef-feature,
+.ef-glass .ef-mini-card,
+.ef-glass .ef-brand,
+.ef-glass .ef-toolbar,
+.ef-glass .ef-filter-box,
+.ef-glass .ef-freeship,
+.ef-glass .ef-stat,
+.ef-glass .ef-rating-summary,
+.ef-glass .ef-review-form,
+.ef-glass .ef-track-box,
+.ef-glass .ef-faq-cta,
+.ef-glass .ef-error-box,
+.ef-glass .ef-accordion .accordion-item,
+.ef-glass .ef-success-box > div {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42));
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+.ef-glass .mcard,
+.ef-glass .catcard,
+.ef-glass .ef-mini-card,
+.ef-glass .ef-stat,
+.ef-glass .ef-feature,
+.ef-glass .ef-brand {
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+}
+.ef-glass .mcard:hover,
+.ef-glass .catcard:hover,
+.ef-glass .ef-mini-card:hover,
+.ef-glass .ef-stat:hover,
+.ef-glass .ef-feature:hover {
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
+}
+.ef-glass .ef-brand { background: rgba(255, 255, 255, 0.5); }
+.ef-glass .ef-brand:hover { background: rgba(255, 255, 255, 0.8); }
+
+/* Image wells inside cards stay light so product photos read well */
+.ef-glass .mimg,
+.ef-glass .chimg,
+.ef-glass .ef-mini-card-img,
+.ef-glass .ef-mini-img,
+.ef-glass .ef-cart-img,
+.ef-glass .ef-check-img,
+.ef-glass .ef-catimg-icon,
+.ef-glass .ef-gallery-main {
+    background: var(--ef-card-img-bg-glass, rgba(255, 255, 255, 0.62));
+}
+.ef-glass .ef-gallery-main {
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+.ef-glass .ef-thumb {
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-sm);
+}
+
+/* Soft inner panels (inside a glass card) */
+.ef-glass .ef-qty,
+.ef-glass .ef-share,
+.ef-glass .ef-cart-remove,
+.ef-glass .ef-pay-icon,
+.ef-glass .ef-address-label,
+.ef-glass .ef-pay-info,
+.ef-glass .ef-deal-timer,
+.ef-glass .ef-track-note,
+.ef-glass .ef-error-wait,
+.ef-glass .ef-account-user,
+.ef-glass .ef-welcome {
+    background: var(--glass-bg-soft);
+    border: 1px solid var(--glass-border-soft);
+}
+.ef-glass .ef-deal-timer { border-style: dashed; border-color: rgba(var(--ef-secondary-rgb),  0.7); }
+.ef-glass .ef-share:hover,
+.ef-glass .ef-cart-remove:hover { background: var(--primary); color: #fff; border-color: transparent; }
+.ef-glass .ef-account-user { border-width: 0 0 1px; }
+
+/* Selectable tiles */
+.ef-glass .ef-chip,
+.ef-glass .ef-radio,
+.ef-glass .ef-pay-tile,
+.ef-glass .ef-address-option,
+.ef-glass .filtbtn {
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-sm);
+    box-shadow: var(--glass-highlight);
+}
+.ef-glass .ef-radio:has(input:checked),
+.ef-glass .ef-pay-tile:has(input:checked),
+.ef-glass .ef-address-option:has(input:checked) {
+    background: rgba(255, 255, 255, 0.82);
+    border-color: var(--primary);
+    box-shadow: var(--glass-highlight), 0 0 0 4px rgba(var(--ef-primary-rgb),  0.1), var(--glow-primary);
+}
+.ef-glass .filtbtn.active,
+.ef-glass .filtbtn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: var(--glow-primary);
+}
+.ef-glass .ef-chip:hover { border-color: var(--secondary); }
+.ef-glass .ef-chip.active {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: var(--glass-highlight), 0 0 0 3px rgba(var(--ef-primary-rgb),  0.1);
+}
+
+/* Lines inside panels */
+.ef-glass .ef-cart-line,
+.ef-glass .ef-check-line { border-color: rgba(255, 255, 255, 0.55); }
+.ef-glass .ef-cart-line.is-short { background: rgba(220, 53, 69, 0.07); }
+.ef-glass .ef-sum-total { border-top-color: rgba(120, 90, 90, 0.18); }
+
+/* Tables inside glass */
+.ef-glass .table {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.35);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.5);
+    --bs-table-border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Top bar & navbar ---------- */
+.ef-glass #topbar {
+    background: rgba(17, 12, 16, 0.78);
+    background: color-mix(in srgb, var(--ef-topbar-bg, #110c10) 80%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border-bottom: 1px solid var(--glass-dark-border);
+}
+/* The navbar's glass sits on ::before. A backdrop-filter on #nav itself would make it a "backdrop root",
+   and the mega menu / dropdowns inside it could then blur only the navbar, not the page behind them. */
+.ef-glass #nav {
+    background: transparent;
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glass-highlight), 0 6px 24px rgba(17, 12, 46, 0.06);
+}
+.ef-glass #nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.58);
+    background: color-mix(in srgb, var(--ef-navbar-bg, #ffffff) 58%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+    transition: background 0.4s;
+}
+.ef-glass #nav.scrolled { box-shadow: var(--glass-highlight), 0 10px 34px rgba(17, 12, 46, 0.12); }
+.ef-glass #nav.scrolled::before {
+    background: rgba(255, 255, 255, 0.7);
+    background: color-mix(in srgb, var(--ef-navbar-bg, #ffffff) 72%, transparent);
+}
+.ef-glass .ef-navicon {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: 50%;
+}
+.ef-glass .ef-navicon:hover,
+.ef-glass .ef-navicon[aria-expanded="true"] { background: rgba(255, 255, 255, 0.9); color: var(--primary); }
+
+/* Dropdowns, mega menu, mini cart, quick view, toasts, search box */
+.ef-glass .ef-dropdown,
+.ef-glass #nav .ef-megamenu,
+.ef-glass .dropdown-menu,
+.ef-glass .ef-suggest,
+.ef-glass .ef-toast {
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-highlight), 0 18px 50px rgba(17, 12, 46, 0.16);
+}
+.ef-glass .dropdown-item:hover,
+.ef-glass .dropdown-item:focus { background: rgba(var(--ef-primary-rgb),  0.08); }
+.ef-glass .offcanvas {
+    background: rgba(255, 255, 255, 0.74);
+    -webkit-backdrop-filter: blur(26px) saturate(180%);
+    backdrop-filter: blur(26px) saturate(180%);
+    border-left: 1px solid var(--glass-border);
+}
+.ef-glass .offcanvas-header { border-bottom: 1px solid var(--glass-border-soft); }
+.ef-glass .offcanvas-backdrop.show,
+.ef-glass .modal-backdrop.show { opacity: 0.35; }
+.ef-glass .mpbox {
+    background: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(26px) saturate(180%);
+    backdrop-filter: blur(26px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-highlight), 0 30px 80px rgba(17, 12, 46, 0.25);
+}
+.ef-glass .mpbox .mpimg,
+.ef-glass #menuPop .mpimg { background: rgba(255, 255, 255, 0.55); }
+.ef-glass .mpclose { background: rgba(255, 255, 255, 0.7); border: 1px solid var(--glass-border); }
+
+/* ---------- Dark glass: page header, special section, footer ---------- */
+.ef-glass .ef-pagehead {
+    background:
+        radial-gradient(120% 140% at 85% 0%, rgba(var(--ef-primary-rgb),  0.45), transparent 55%),
+        radial-gradient(80% 120% at 0% 100%, rgba(139, 92, 246, 0.35), transparent 60%),
+        color-mix(in srgb, var(--ef-pagehead-bg, #1a060a) 72%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border-bottom: 1px solid var(--glass-dark-border);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+.ef-glass #special {
+    background:
+        radial-gradient(90% 120% at 100% 0%, rgba(var(--ef-primary-rgb),  0.4), transparent 60%),
+        radial-gradient(70% 100% at 0% 100%, rgba(var(--ef-secondary-rgb),  0.25), transparent 60%),
+        color-mix(in srgb, var(--ef-special-bg, #1a060a) 80%, transparent);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+}
+.ef-glass #special .cditem {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-dark-border);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+.ef-glass footer {
+    background:
+        radial-gradient(70% 90% at 100% 0%, rgba(var(--ef-primary-rgb),  0.18), transparent 60%),
+        color-mix(in srgb, var(--ef-footer-bg, #120a0e) 86%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border-top: 1px solid var(--glass-dark-border);
+}
+.ef-glass footer .fsoc a,
+.ef-glass footer .fciico {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--glass-dark-border);
+}
+.ef-glass footer .fbot { border-top-color: var(--glass-dark-border); }
+.ef-glass .ef-mini-card-dark {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--glass-dark-border);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+/* ---------- Forms ---------- */
+.ef-glass .fctrl,
+.ef-glass .form-control,
+.ef-glass .form-select {
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 1px 2px rgba(17, 12, 46, 0.05);
+    /* no backdrop-filter here: it would paint the field over icons placed inside it */
+}
+.ef-glass .fctrl:focus,
+.ef-glass .form-control:focus,
+.ef-glass .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(var(--ef-primary-rgb),  0.12), 0 6px 18px -6px rgba(var(--ef-primary-rgb),  0.35);
+}
+.ef-glass .fctrl.is-invalid,
+.ef-glass .form-control.is-invalid { border-color: #dc3545; }
+.ef-glass .ef-faq-search .fctrl { background-color: rgba(255, 255, 255, 0.65); }
+.ef-glass .ef-accordion .accordion-button,
+.ef-glass .ef-accordion .accordion-button:not(.collapsed) { background: transparent; }
+.ef-glass .ef-accordion .accordion-button::after { background: rgba(255, 255, 255, 0.6); }
+.ef-glass .ef-accordion .accordion-button:not(.collapsed)::after { background: var(--primary); }
+
+/* ---------- Buttons: keep colours, add glow ---------- */
+.ef-glass .btn-red,
+.ef-glass .madd,
+.ef-glass .ef-pagination .page-item.active .page-link {
+    box-shadow: var(--glow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.ef-glass .ef-buynow { box-shadow: var(--glow-secondary), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.ef-glass .btn-red:hover,
+.ef-glass .madd:hover { box-shadow: 0 12px 30px -4px rgba(var(--ef-primary-rgb),  0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+.ef-glass .ef-btn-outline {
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-sm);
+}
+.ef-glass .ef-btn-outline:hover { background: var(--primary); box-shadow: var(--glow-primary); }
+.ef-glass .ef-pagination .page-link {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-sm);
+}
+.ef-glass .mhrt,
+.ef-glass .ef-zoom {
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-sm);
+}
+
+/* ---------- Steps / timeline ---------- */
+.ef-glass .ef-steps::before { background: rgba(255, 255, 255, 0.7); }
+.ef-glass .ef-step-dot {
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-sm);
+}
+.ef-glass .ef-step.done .ef-step-dot { background: var(--green); box-shadow: 0 6px 18px -4px rgba(45, 106, 79, 0.55); }
+.ef-glass .ef-step.current .ef-step-dot { background: var(--primary); box-shadow: 0 0 0 5px rgba(var(--ef-primary-rgb),  0.15), var(--glow-primary); }
+
+/* ---------- Hero slider: glass arrows and dots ---------- */
+.ef-glass .ef-hero-slider .swiper-button-prev,
+.ef-glass .ef-hero-slider .swiper-button-next {
+    width: 48px;
+    height: 48px;
+    margin-top: -24px;
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 10px 28px rgba(17, 12, 46, 0.22);
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.ef-glass .ef-hero-slider .swiper-button-prev { left: 18px; }
+.ef-glass .ef-hero-slider .swiper-button-next { right: 18px; }
+.ef-glass .ef-hero-slider .swiper-button-prev::after,
+.ef-glass .ef-hero-slider .swiper-button-next::after { font-size: 1.05rem; font-weight: 700; }
+.ef-glass .ef-hero-slider .swiper-button-prev:hover,
+.ef-glass .ef-hero-slider .swiper-button-next:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: scale(1.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 14px 34px rgba(17, 12, 46, 0.3);
+}
+.ef-glass .ef-hero-slider .swiper-pagination.swiper-pagination-horizontal {
+    left: 50%;
+    bottom: 18px;
+    width: auto;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 24px rgba(17, 12, 46, 0.18);
+}
+.ef-glass .ef-hero-slider .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 !important;
+    background: #fff;
+    opacity: 0.55;
+    transition: width 0.3s, opacity 0.3s;
+}
+.ef-glass .ef-hero-slider .swiper-pagination-bullet-active {
+    width: 26px;
+    border-radius: 8px;
+    opacity: 1;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- Promo banners: glass frame + light sweep on hover ---------- */
+.ef-glass .ef-promo {
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow: var(--glass-highlight), 0 18px 44px rgba(17, 12, 46, 0.14);
+    transition: transform 0.35s, box-shadow 0.35s;
+}
+.ef-glass .ef-promo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.28) 45%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ef-glass .ef-promo:hover { transform: translateY(-6px); box-shadow: var(--glass-highlight), 0 26px 60px rgba(17, 12, 46, 0.22); }
+.ef-glass .ef-promo:hover::after { transform: translateX(100%); }
+
+/* ---------- Category marquee: frosted strip ---------- */
+.ef-glass .mqsec {
+    background: rgba(255, 255, 255, 0.5);
+    background: color-mix(in srgb, var(--ef-navbar-bg, #ffffff) 50%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glass-highlight), 0 8px 26px rgba(17, 12, 46, 0.06);
+    color: var(--dark);
+}
+.ef-glass .mqitem { font-weight: 600; }
+.ef-glass .mqitem:hover { color: var(--primary); }
+.ef-glass .mqitem i { color: var(--primary); opacity: 0.8; }
+
+/* ---------- Browsers without backdrop-filter: stay readable ---------- */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .ef-glass .fcard, .ef-glass .mcard, .ef-glass .catcard, .ef-glass .ef-mini-card, .ef-glass .ef-toolbar,
+    .ef-glass .ef-filter-box, .ef-glass .ef-stat, .ef-glass .ef-feature, .ef-glass .ef-accordion .accordion-item,
+    .ef-glass .dropdown-menu, .ef-glass .ef-dropdown, .ef-glass .offcanvas, .ef-glass .mpbox, .ef-glass #nav::before {
+        background: rgba(255, 255, 255, 0.94);
+    }
+    .ef-glass footer, .ef-glass #topbar { background: #16100f; }
+}

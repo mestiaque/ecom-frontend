@@ -25,7 +25,7 @@ class Address extends Model
         'post_office', 'postal_code', 'address_line', 'is_default',
     ];
 
-    protected $casts = ['is_default' => 'boolean'];
+    protected $casts = ['is_default' => 'boolean', 'division_id' => 'integer', 'district_id' => 'integer', 'upazila_id' => 'integer'];
 
     public function customer(): BelongsTo
     {

@@ -1,4 +1,11 @@
 :root {
+  /* Defaults — the storefront theme (admin → Storefront Theme) overrides these */
+  --ef-primary-rgb: 232, 40, 26;
+  --ef-secondary-rgb: 246, 166, 35;
+  --ef-primary-dark: #c01e12;
+  --ef-font-heading: "Plus Jakarta Sans", system-ui, sans-serif;
+  --ef-font-body: "Inter", system-ui, sans-serif;
+  --ef-font-accent: "Plus Jakarta Sans", system-ui, sans-serif;
   --primary: #e8281a;
   --secondary: #f6a623;
   --dark: #1a1a1a;
@@ -18,7 +25,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
   color: #444;
   background: #fff;
   overflow-x: hidden;
@@ -28,7 +35,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   color: var(--dark);
 }
 a {
@@ -114,10 +121,10 @@ img {
   justify-content: center;
   font-size: 1.3rem;
   color: #fff;
-  box-shadow: 0 4px 15px rgba(232, 40, 26, 0.35);
+  box-shadow: 0 4px 15px rgba(var(--ef-primary-rgb),  0.35);
 }
 .bname {
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   font-size: 1.5rem;
   font-weight: 900;
   color: var(--dark);
@@ -169,17 +176,17 @@ img {
   transition: 0.3s;
 }
 #navSearchBtn:hover {
-  background: rgba(232, 40, 26, 0.08);
+  background: rgba(var(--ef-primary-rgb),  0.08);
   color: var(--primary);
 }
 .nav-cta {
-  background: linear-gradient(135deg, var(--primary), #c01e12);
+  background: linear-gradient(135deg, var(--primary), var(--ef-primary-dark));
   color: #fff !important;
   border-radius: 8px;
   padding: 10px 20px !important;
   font-size: 0.84rem !important;
   font-weight: 600 !important;
-  box-shadow: 0 4px 15px rgba(232, 40, 26, 0.3);
+  box-shadow: 0 4px 15px rgba(var(--ef-primary-rgb),  0.3);
   margin-left: 6px;
 }
 .nav-cta::after {
@@ -187,7 +194,7 @@ img {
 }
 .nav-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(232, 40, 26, 0.4);
+  box-shadow: 0 8px 22px rgba(var(--ef-primary-rgb),  0.4);
 }
 
 /* ===================== SECTION COMMONS ===================== */
@@ -195,7 +202,7 @@ section {
   padding: 88px 0;
 }
 .slbl {
-  font-family: "Dancing Script", cursive;
+  font-family: var(--ef-font-accent);
   font-size: 1.35rem;
   color: var(--primary);
   display: block;
@@ -226,24 +233,24 @@ section {
   line-height: 1.8;
 }
 .btn-red {
-  background: linear-gradient(135deg, var(--primary), #c01e12);
+  background: linear-gradient(135deg, var(--primary), var(--ef-primary-dark));
   color: #fff;
   border: none;
   border-radius: 50px;
   padding: 14px 32px;
   font-weight: 600;
   font-size: 0.93rem;
-  box-shadow: 0 8px 24px rgba(232, 40, 26, 0.35);
+  box-shadow: 0 8px 24px rgba(var(--ef-primary-rgb),  0.35);
   transition: 0.3s;
   display: inline-flex;
   align-items: center;
   gap: 9px;
   cursor: pointer;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .btn-red:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 34px rgba(232, 40, 26, 0.45);
+  box-shadow: 0 14px 34px rgba(var(--ef-primary-rgb),  0.45);
   color: #fff;
 }
 
@@ -263,7 +270,7 @@ section {
   transform: translate(-50%, -50%);
   font-size: 22vw;
   font-weight: 900;
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   color: rgba(0, 0, 0, 0.04);
   pointer-events: none;
   white-space: nowrap;
@@ -275,7 +282,7 @@ section {
 .hs1 {
   width: 480px;
   height: 480px;
-  background: radial-gradient(circle, rgba(232, 40, 26, 0.07), transparent 70%);
+  background: radial-gradient(circle, rgba(var(--ef-primary-rgb),  0.07), transparent 70%);
   top: -90px;
   right: -80px;
   animation: fsh 8s ease-in-out infinite;
@@ -285,7 +292,7 @@ section {
   height: 280px;
   background: radial-gradient(
     circle,
-    rgba(246, 166, 35, 0.09),
+    rgba(var(--ef-secondary-rgb),  0.09),
     transparent 70%
   );
   bottom: -50px;
@@ -345,7 +352,7 @@ section {
   left: 0;
   right: 0;
   height: 7px;
-  background: rgba(232, 40, 26, 0.14);
+  background: rgba(var(--ef-primary-rgb),  0.14);
   border-radius: 4px;
   z-index: -1;
 }
@@ -397,7 +404,7 @@ section {
   margin-top: 32px;
 }
 .hstat .snum {
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   font-size: 1.9rem;
   font-weight: 900;
   color: var(--dark);
@@ -430,7 +437,7 @@ section {
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  box-shadow: 0 28px 76px rgba(232, 40, 26, 0.14);
+  box-shadow: 0 28px 76px rgba(var(--ef-primary-rgb),  0.14);
 }
 .hcircle img {
   width: 90%;
@@ -482,11 +489,11 @@ section {
   font-size: 0.95rem;
 }
 .fcoi.r {
-  background: rgba(232, 40, 26, 0.11);
+  background: rgba(var(--ef-primary-rgb),  0.11);
   color: var(--primary);
 }
 .fcoi.y {
-  background: rgba(246, 166, 35, 0.14);
+  background: rgba(var(--ef-secondary-rgb),  0.14);
   color: var(--secondary);
 }
 .fcoi.g {
@@ -555,14 +562,14 @@ section {
 .catcard:hover,
 .catcard.active {
   transform: translateY(-7px);
-  box-shadow: 0 14px 38px rgba(232, 40, 26, 0.14);
+  box-shadow: 0 14px 38px rgba(var(--ef-primary-rgb),  0.14);
   border-color: var(--primary);
 }
 .catimg {
   width: 86px;
   height: 86px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: var(--ef-card-fit, contain);
   margin: 0 auto 12px;
   display: block;
   transition: 0.4s;
@@ -624,10 +631,10 @@ section {
   border-radius: 14px;
   padding: 18px 22px;
   text-align: center;
-  box-shadow: 0 10px 28px rgba(232, 40, 26, 0.4);
+  box-shadow: 0 10px 28px rgba(var(--ef-primary-rgb),  0.4);
 }
 .aexp .anum {
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   font-size: 2.3rem;
   font-weight: 900;
   line-height: 1;
@@ -655,11 +662,11 @@ section {
   transition: 0.3s;
 }
 .ftico.r {
-  background: rgba(232, 40, 26, 0.1);
+  background: rgba(var(--ef-primary-rgb),  0.1);
   color: var(--primary);
 }
 .ftico.y {
-  background: rgba(246, 166, 35, 0.11);
+  background: rgba(var(--ef-secondary-rgb),  0.11);
   color: var(--secondary);
 }
 .ftico.g {
@@ -674,7 +681,7 @@ section {
   font-weight: 700;
   color: var(--dark);
   margin-bottom: 2px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .fti p {
   font-size: 0.8rem;
@@ -699,14 +706,14 @@ section {
   cursor: pointer;
   transition: 0.3s;
   margin: 3px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .filtbtn.active,
 .filtbtn:hover {
   background: var(--primary);
   border-color: var(--primary);
   color: #fff;
-  box-shadow: 0 5px 18px rgba(232, 40, 26, 0.24);
+  box-shadow: 0 5px 18px rgba(var(--ef-primary-rgb),  0.24);
 }
 .mwrap {
   transition: 0.35s;
@@ -729,14 +736,15 @@ section {
 .mimg {
   position: relative;
   overflow: hidden;
-  height: 215px;
-  background: var(--cream2);
+  height: var(--ef-card-img-h, 215px);
+  background: var(--ef-card-img-bg, #fff);
 }
 .mimg img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: var(--ef-card-fit, contain);
   transition: 0.5s;
+  padding: var(--ef-card-pad, 10px);
 }
 .mcard:hover .mimg img {
   transform: scale(1.09);
@@ -795,7 +803,7 @@ section {
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: 5px;
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
 }
 .mdesc {
   font-size: 0.78rem;
@@ -812,7 +820,7 @@ section {
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--primary);
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
 }
 .mprice small {
   font-size: 0.72rem;
@@ -830,7 +838,7 @@ section {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), #c01e12);
+  background: linear-gradient(135deg, var(--primary), var(--ef-primary-dark));
   border: none;
   color: #fff;
   font-size: 1rem;
@@ -839,7 +847,7 @@ section {
   justify-content: center;
   cursor: pointer;
   transition: 0.3s;
-  box-shadow: 0 4px 11px rgba(232, 40, 26, 0.28);
+  box-shadow: 0 4px 11px rgba(var(--ef-primary-rgb),  0.28);
 }
 .madd:hover {
   transform: scale(1.15) rotate(90deg);
@@ -906,7 +914,7 @@ section {
   min-width: 72px;
 }
 .cdnum {
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   font-size: 2.1rem;
   font-weight: 900;
   color: #fff;
@@ -935,7 +943,7 @@ section {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(246, 166, 35, 0.24),
+    rgba(var(--ef-secondary-rgb),  0.24),
     transparent 70%
   );
 }
@@ -944,7 +952,7 @@ section {
   z-index: 2;
   width: 100%;
   max-width: 440px;
-  filter: drop-shadow(0 28px 56px rgba(246, 166, 35, 0.28));
+  filter: drop-shadow(0 28px 56px rgba(var(--ef-secondary-rgb),  0.28));
   animation: fltimg 5s ease-in-out infinite;
 }
 @keyframes fltimg {
@@ -971,7 +979,7 @@ section {
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(232, 40, 26, 0.5);
+  box-shadow: 0 8px 24px rgba(var(--ef-primary-rgb),  0.5);
   animation: plsbdg 2.5s ease-in-out infinite;
 }
 @keyframes plsbdg {
@@ -981,7 +989,7 @@ section {
   }
   50% {
     transform: scale(1.06);
-    box-shadow: 0 12px 34px rgba(232, 40, 26, 0.7);
+    box-shadow: 0 12px 34px rgba(var(--ef-primary-rgb),  0.7);
   }
 }
 .sppbdg .old {
@@ -1097,11 +1105,11 @@ section {
   border-radius: 50%;
   background: var(--primary);
   border: 4px solid #fff;
-  box-shadow: 0 0 0 3px rgba(232, 40, 26, 0.3);
+  box-shadow: 0 0 0 3px rgba(var(--ef-primary-rgb),  0.3);
   flex-shrink: 0;
 }
 .tlyear {
-  font-family: "Dancing Script", cursive;
+  font-family: var(--ef-font-accent);
   color: var(--primary);
   font-size: 1.15rem;
   margin-bottom: 3px;
@@ -1111,7 +1119,7 @@ section {
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: 7px;
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   color: var(--dark);
 }
 .tl-left p,
@@ -1294,7 +1302,7 @@ section {
   border-radius: 18px;
   padding: 28px;
   text-align: center;
-  box-shadow: 0 18px 48px rgba(232, 40, 26, 0.4);
+  box-shadow: 0 18px 48px rgba(var(--ef-primary-rgb),  0.4);
 }
 .hrscta h4 {
   color: #fff;
@@ -1343,8 +1351,8 @@ section {
   top: 18px;
   right: 22px;
   font-size: 4.5rem;
-  color: rgba(232, 40, 26, 0.07);
-  font-family: "Playfair Display", serif;
+  color: rgba(var(--ef-primary-rgb),  0.07);
+  font-family: var(--ef-font-heading);
   line-height: 1;
 }
 .tess {
@@ -1375,7 +1383,7 @@ section {
   font-size: 0.88rem;
   color: var(--dark);
   margin-bottom: 1px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .tesrl {
   font-size: 0.73rem;
@@ -1390,7 +1398,7 @@ section {
   width: 54px;
   height: 54px;
   border-radius: 13px;
-  background: rgba(232, 40, 26, 0.1);
+  background: rgba(var(--ef-primary-rgb),  0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1410,7 +1418,7 @@ section {
   border: 2px solid #eee;
   border-radius: 9px;
   padding: 11px 15px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
   font-size: 0.88rem;
   outline: none;
   transition: 0.3s;
@@ -1587,7 +1595,7 @@ section {
   padding: 14px 22px;
   font-size: 0.9rem;
   outline: none;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
   color: #333;
 }
 .nlbtn {
@@ -1602,7 +1610,7 @@ section {
   cursor: pointer;
   white-space: nowrap;
   transition: 0.3s;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .nlbtn:hover {
   transform: scale(1.05);
@@ -1652,7 +1660,7 @@ section {
   width: 40px;
   height: 40px;
   border-radius: 9px;
-  background: rgba(232, 40, 26, 0.18);
+  background: rgba(var(--ef-primary-rgb),  0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1667,7 +1675,7 @@ section {
   text-transform: uppercase;
   letter-spacing: 0.8px;
   margin-bottom: 1px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .ctinfo span {
   color: #fff;
@@ -1700,7 +1708,7 @@ footer {
   padding: 68px 0 0;
 }
 .fnm {
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   font-size: 1.9rem;
   font-weight: 900;
   color: #fff;
@@ -1744,7 +1752,7 @@ footer {
   padding-bottom: 9px;
   border-bottom: 2px solid var(--primary);
   display: inline-block;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .flinks li {
   list-style: none;
@@ -1776,7 +1784,7 @@ footer {
   width: 34px;
   height: 34px;
   border-radius: 7px;
-  background: rgba(232, 40, 26, 0.14);
+  background: rgba(var(--ef-primary-rgb),  0.14);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1825,7 +1833,7 @@ footer {
   width: 44px;
   height: 44px;
   border-radius: 11px;
-  background: linear-gradient(135deg, var(--primary), #c01e12);
+  background: linear-gradient(135deg, var(--primary), var(--ef-primary-dark));
   color: #fff;
   border: none;
   cursor: pointer;
@@ -1833,7 +1841,7 @@ footer {
   align-items: center;
   justify-content: center;
   font-size: 0.95rem;
-  box-shadow: 0 6px 18px rgba(232, 40, 26, 0.38);
+  box-shadow: 0 6px 18px rgba(var(--ef-primary-rgb),  0.38);
   opacity: 0;
   transform: translateY(18px);
   transition: 0.4s;
@@ -1856,7 +1864,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 9px;
-  box-shadow: 0 7px 22px rgba(246, 166, 35, 0.38);
+  box-shadow: 0 7px 22px rgba(var(--ef-secondary-rgb),  0.38);
   cursor: pointer;
   transition: 0.3s;
   color: var(--dark);
@@ -1937,7 +1945,7 @@ footer {
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 26px;
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
 }
 .sovinput {
   display: flex;
@@ -1953,7 +1961,7 @@ footer {
   padding: 17px 24px;
   color: #fff;
   font-size: 1.05rem;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
   outline: none;
 }
 .sovinput input::placeholder {
@@ -1969,7 +1977,7 @@ footer {
   transition: 0.3s;
 }
 .sovinput button:hover {
-  background: #c01e12;
+  background: var(--ef-primary-dark);
 }
 .sovcats {
   display: flex;
@@ -1990,13 +1998,13 @@ footer {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
 }
 .sovcat img {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: var(--ef-card-fit, contain);
 }
 .sovcat:hover,
 .sovcat.active {
@@ -2016,8 +2024,8 @@ footer {
 .sovtrend .ttag {
   display: inline-block;
   margin: 3px;
-  background: rgba(246, 166, 35, 0.13);
-  border: 1px solid rgba(246, 166, 35, 0.28);
+  background: rgba(var(--ef-secondary-rgb),  0.13);
+  border: 1px solid rgba(var(--ef-secondary-rgb),  0.28);
   color: var(--secondary);
   border-radius: 20px;
   padding: 3px 13px;
@@ -2076,7 +2084,7 @@ footer {
 .mpbox .mpimg img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: var(--ef-card-fit, contain);
 }
 .mpbox .mpbody {
   width: 56%;
@@ -2115,7 +2123,7 @@ footer {
   font-size: 1.7rem;
   font-weight: 900;
   margin-bottom: 9px;
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
   color: var(--dark);
 }
 #mpStars {
@@ -2134,7 +2142,7 @@ footer {
   font-weight: 900;
   color: var(--primary);
   margin-bottom: 14px;
-  font-family: "Playfair Display", serif;
+  font-family: var(--ef-font-heading);
 }
 #mpPrice small {
   font-size: 0.95rem;
@@ -2202,7 +2210,7 @@ footer {
   margin-bottom: 20px;
 }
 .mptag {
-  background: rgba(246, 166, 35, 0.11);
+  background: rgba(var(--ef-secondary-rgb),  0.11);
   color: var(--dark);
   border-radius: 20px;
   padding: 3px 11px;
@@ -2211,7 +2219,7 @@ footer {
 }
 .mpaddcart {
   width: 100%;
-  background: linear-gradient(135deg, var(--primary), #c01e12);
+  background: linear-gradient(135deg, var(--primary), var(--ef-primary-dark));
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -2219,7 +2227,7 @@ footer {
   font-size: 0.96rem;
   font-weight: 700;
   cursor: pointer;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
   transition: 0.3s;
   display: flex;
   align-items: center;
@@ -2228,7 +2236,7 @@ footer {
 }
 .mpaddcart:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(232, 40, 26, 0.38);
+  box-shadow: 0 10px 28px rgba(var(--ef-primary-rgb),  0.38);
 }
 
 /* --- FIX 7: GALLERY POPUP --- */
@@ -2305,7 +2313,7 @@ footer {
   padding: 7px 20px;
   cursor: pointer;
   font-size: 0.83rem;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ef-font-body);
   transition: 0.3s;
 }
 .gpnav button:hover {

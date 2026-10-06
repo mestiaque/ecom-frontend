@@ -27,7 +27,7 @@
             <strong class="text-primary-ef">{{ ecom_money($cart->subtotal()) }}</strong>
         </div>
         <div class="d-grid gap-2">
-            <a href="{{ route('efront.checkout') }}" class="btn-red justify-content-center"><i class="fas fa-lock"></i>Checkout</a>
+            <a href="{{ route('efront.checkout') }}" class="btn-red ef-btn-checkout justify-content-center">{{ efront_theme()->buttonContent('checkout') }}</a>
             <a href="{{ route('efront.cart') }}" class="ef-btn-outline justify-content-center">View Cart</a>
         </div>
     </div>

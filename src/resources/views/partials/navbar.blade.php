@@ -4,17 +4,22 @@
         <a class="navbar-brand" href="{{ route('efront.home') }}">@include('efront::partials.logo')</a>
 
         <div class="d-flex align-items-center gap-1 order-lg-last">
-            <button id="navSearchBtn" type="button" title="Search" data-search-open><i class="fas fa-search"></i></button>
+            <button id="navSearchBtn" type="button" title="Search" data-search-open><i class="{{ efront_theme()->icon('search') }}"></i></button>
             <a href="{{ $customer ? route('efront.account.wishlist') : route('efront.account.login') }}" class="ef-navicon d-none d-sm-inline-flex" title="Wishlist">
-                <i class="far fa-heart"></i>
+                <i class="{{ efront_theme()->icon('wishlist') }}"></i>
                 <span class="ef-badge" data-wishlist-count @if(! count(efront()->wishlistIds())) hidden @endif>{{ count(efront()->wishlistIds()) }}</span>
             </a>
-            <div class="dropdown">
-                <a href="#" class="ef-navicon @if($customer) ef-navavatar @endif" data-bs-toggle="dropdown" aria-expanded="false" title="{{ $customer ? $customer->name : 'Account' }}">
+
+            <button type="button" class="ef-navicon ef-carticon" data-bs-toggle="offcanvas" data-bs-target="#miniCart" title="Cart">
+                <i class="{{ efront_theme()->icon('cart') }}"></i>
+                <span class="ef-badge" data-cart-count @if(! efront()->cartCount()) hidden @endif>{{ efront()->cartCount() }}</span>
+            </button>
+            <div class="dropdown ef-nav-account">
+                <a href="#" class="ef-navicon @if($customer) ef-navavatar @endif" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="{{ $customer ? $customer->name : 'Account' }}">
                     @if($customer)
                         <x-efront::avatar :customer="$customer" />
                     @else
-                        <i class="far fa-user"></i>
+                        <i class="{{ efront_theme()->icon('account') }}"></i>
                     @endif
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end ef-dropdown">
@@ -41,12 +46,8 @@
                     @endif
                 </ul>
             </div>
-            <button type="button" class="ef-navicon ef-carticon" data-bs-toggle="offcanvas" data-bs-target="#miniCart" title="Cart">
-                <i class="fas fa-shopping-bag"></i>
-                <span class="ef-badge" data-cart-count @if(! efront()->cartCount()) hidden @endif>{{ efront()->cartCount() }}</span>
-            </button>
             <button class="navbar-toggler border-0 ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-label="Menu">
-                <i class="fas fa-bars" style="color:var(--primary);font-size:1.35rem;"></i>
+                <i class="{{ efront_theme()->icon('menu') }}" style="color:var(--primary);font-size:1.35rem;"></i>
             </button>
         </div>
 

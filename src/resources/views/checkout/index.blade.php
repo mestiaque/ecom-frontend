@@ -130,8 +130,8 @@
                                 <div class="ef-track-note is-success py-2 mb-2"><i class="fas fa-truck"></i>Every item in your cart has free delivery.</div>
                             @endif
                             <div class="ef-sum-row ef-sum-total"><span>Total</span><strong data-total-amount data-base="{{ max(0, $subtotal - $coupon['discount']) }}" data-symbol="{{ config('ecom.currency_symbol') }}">{{ ecom_money(max(0, $subtotal - $coupon['discount'])) }}</strong></div>
-                            <button type="submit" class="btn-red w-100 justify-content-center mt-3" @disabled($zones->isEmpty() || $unavailable->isNotEmpty())>
-                                <i class="fas fa-check-circle"></i>Place Order
+                            <button type="submit" class="btn-red ef-btn-place-order w-100 justify-content-center mt-3" @disabled($zones->isEmpty() || $unavailable->isNotEmpty())>
+                                {{ efront_theme()->buttonContent('place_order') }}
                             </button>
                             <p class="small text-muted text-center mt-2 mb-0"><i class="fas fa-lock me-1"></i>Your information is safe with us.</p>
                         </div>

@@ -27,7 +27,11 @@
                 <x-efront::rating :rating="$product->rating" :count="$product->reviews_count ?? 0" />
             </div>
             <button type="button" class="madd" title="Quick view" data-quick-view="{{ route('efront.product.quick-view', $product) }}" @disabled($product->stock <= 0)>
-                <i class="fas {{ $product->stock > 0 ? 'fa-plus' : 'fa-ban' }}"></i>
+                @if($product->stock > 0)
+                    <i class="{{ \ME\Efront\Support\Theme::validIcon(efront_theme()->button('quick_add')['icon']) ? efront_theme()->button('quick_add')['icon'] : 'fas fa-plus' }}"></i>
+                @else
+                    <i class="fas fa-ban"></i>
+                @endif
             </button>
         </div>
     </div>

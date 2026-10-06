@@ -48,7 +48,7 @@ class ShopController extends Controller
         return $this->listing($request, [
             'title' => $category->name,
             'description' => $category->description,
-            'banner' => ecom_image($category->banner),
+            'banner' => $category->banner_url,
             'category' => $category,
             'scope' => fn (Builder $q) => $q->whereIn('category_id', [$category->id, ...$category->descendantIds()]),
         ]);
@@ -73,7 +73,7 @@ class ShopController extends Controller
         return $this->listing($request, [
             'title' => $campaign->title,
             'description' => $campaign->description,
-            'banner' => ecom_image($campaign->banner),
+            'banner' => $campaign->banner_url,
             'campaign' => $campaign,
             'scope' => fn (Builder $q) => $q->whereHas('campaigns', fn ($c) => $c->whereKey($campaign->id)),
         ]);

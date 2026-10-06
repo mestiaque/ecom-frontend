@@ -35,7 +35,8 @@ return [
     // Customer profile photo (KB) — stored on the "public" disk
     'avatar_max_kb' => 2048,
 
-    // Shown when there is no "slider" banner (Website → Banners)
+    // Picture of the text hero shown when there is no "slider" banner (Website → Banners).
+    // The hero texts are edited in Admin → Storefront Theme → Home Page → Hero; only "image" is used here.
     'hero' => [
         'badge' => 'Trusted online shopping',
         'title' => 'Everything you love,',

@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
 use ME\Efront\Http\Controllers\Controller;
+use ME\Efront\Http\Middleware\AuthenticateCustomer;
 use ME\Efront\Models\Customer;
 use ME\Efront\Support\Phone;
 use ME\Efront\Support\RegistrationOtp;
@@ -50,7 +51,7 @@ class AuthController extends Controller
         Auth::guard('customer')->login($customer, $request->boolean('remember'));
         $request->session()->regenerate();
 
-        return redirect()->intended(route('efront.account.dashboard'))->with('success', "Welcome back, {$customer->name}!");
+        return redirect()->to(AuthenticateCustomer::pullIntended($request, route('efront.account.dashboard')))->with('success', "Welcome back, {$customer->name}!");
     }
 
     public function register(): View
@@ -153,7 +154,7 @@ class AuthController extends Controller
         Auth::guard('customer')->login($customer);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('efront.account.dashboard'))->with('success', 'Your account has been created. Welcome!');
+        return redirect()->to(AuthenticateCustomer::pullIntended($request, route('efront.account.dashboard')))->with('success', 'Your account has been created. Welcome!');
     }
 
     public function logout(Request $request): RedirectResponse

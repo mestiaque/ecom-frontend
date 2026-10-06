@@ -4,7 +4,7 @@
 @section('title', $page['title'])
 
 @section('content')
-    <section class="ef-error">
+    <section class="ef-error-page">
         <div class="container">
             <div class="ef-error-box">
                 <div class="ef-error-icon"><i class="{{ $page['icon'] }}"></i></div>

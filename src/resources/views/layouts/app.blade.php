@@ -11,18 +11,26 @@
     @if(efront()->logoUrl())
         <link rel="icon" href="{{ efront()->logoUrl() }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="{{ efront_theme()->fontsUrl() }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('efront/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('efront/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('efront/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('efront/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('efront/css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('efront/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('efront/css/efront.css') }}">
+    <link rel="stylesheet" href="{{ efront_asset('efront/css/style.css') }}">
+    <link rel="stylesheet" href="{{ efront_asset('efront/css/efront.css') }}">
+    @if(efront_theme()->isGlass())
+        <link rel="stylesheet" href="{{ efront_asset('efront/css/glass.css') }}">
+    @endif
+    {{-- Admin → Storefront Theme: colours, fonts, buttons, cards --}}
+    <style id="ef-theme">{!! efront_theme()->css() !!}</style>
     @stack('styles')
 </head>
-<body class="@yield('body_class')">
-    @include('efront::partials.topbar')
+<body class="@yield('body_class') ef-themed {{ efront_theme()->isGlass() ? 'ef-glass' : '' }}">
+    @includeWhen(efront_theme()->isGlass(), 'efront::partials.glass-background')
+    @includeWhen(efront_theme()->get('header.topbar'), 'efront::partials.topbar')
     @include('efront::partials.navbar')
     @include('efront::partials.search')
 
@@ -55,6 +63,15 @@
 
     <button id="btt" type="button" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
 
+    @if(efront_theme()->isPreviewing())
+        {{-- Only the admin editing the theme sees this; hidden inside the admin preview panel --}}
+        <div id="efPreviewBadge" style="position:fixed;left:16px;bottom:16px;z-index:2000;display:flex;align-items:center;gap:10px;padding:8px 10px 8px 14px;border-radius:50px;background:rgba(17,17,17,.85);color:#fff;font-size:.8rem;box-shadow:0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(8px)">
+            <i class="fas fa-eye" style="color:#facc15"></i> Theme preview — not live yet
+            <a href="{{ route('efront.admin.theme.preview.exit', ['return' => url()->full()]) }}" style="background:#fff;color:#111;border-radius:50px;padding:3px 10px;text-decoration:none;font-weight:600">Exit</a>
+        </div>
+        <script>if (window.self !== window.top) document.getElementById('efPreviewBadge').remove();</script>
+    @endif
+
     <script>
         window.Efront = {
             csrf: @json(csrf_token()),
@@ -71,7 +88,7 @@
     <script src="{{ asset('efront/js/aos.js') }}"></script>
     <script src="{{ asset('efront/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('efront/js/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ asset('efront/js/efront.js') }}"></script>
+    <script src="{{ efront_asset('efront/js/efront.js') }}"></script>
     @stack('scripts')
 
     @foreach(['success', 'error'] as $type)

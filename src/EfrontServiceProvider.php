@@ -19,6 +19,7 @@ use ME\Efront\Models\Customer;
 use ME\Efront\Support\Cart;
 use ME\Efront\Support\ErrorPages;
 use ME\Efront\Support\Storefront;
+use ME\Efront\Support\Theme;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -27,6 +28,9 @@ class EfrontServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+
+        // Admin pages use metheme's me_prefix(), which metheme defines in its own boot() (it boots after efront)
+        $this->app->booted(fn () => $this->loadRoutesFrom(__DIR__.'/routes/admin.php'));
         $this->loadViewsFrom(__DIR__.'/resources/views', 'efront');
         $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'efront');
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
@@ -115,10 +119,13 @@ class EfrontServiceProvider extends ServiceProvider
         require_once __DIR__.'/Support/helpers.php';
 
         $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'efront');
+        $this->mergeConfigFrom(__DIR__.'/Config/theme.php', 'efront_theme');
+        $this->mergeConfigFrom(__DIR__.'/Config/theme_presets.php', 'efront_theme_presets');
         $this->mergeConfigFrom(__DIR__.'/Config/permission.php', 'permissions');
 
         $this->app->scoped(Storefront::class);
         $this->app->scoped(Cart::class);
+        $this->app->scoped(Theme::class);
 
         // Shop customers log in with their own guard (ecom_customers), separate from admin users
         $this->app['config']->set([
