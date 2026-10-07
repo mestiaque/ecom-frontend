@@ -267,6 +267,12 @@ class Theme
             '--ef-price' => $c('colors.price'),
             '--ef-label' => $c('colors.label'),
             '--ef-cat-label' => $c('colors.category_label'),
+            '--ef-badge-sale-bg' => $c('badges.sale_bg'),
+            '--ef-badge-sale-text' => $c('badges.sale_text'),
+            '--ef-badge-new-bg' => $c('badges.new_bg'),
+            '--ef-badge-new-text' => $c('badges.new_text'),
+            '--ef-badge-hot-bg' => $c('badges.hot_bg'),
+            '--ef-badge-hot-text' => $c('badges.hot_text'),
             '--ef-font-heading' => '"'.$this->font('heading').'", system-ui, sans-serif',
             '--ef-font-body' => '"'.$this->font('body').'", system-ui, sans-serif',
             '--ef-font-accent' => $this->get('fonts.label_style') === 'script' ? '"Dancing Script", cursive' : '"'.$this->font('heading').'", system-ui, sans-serif',
@@ -295,6 +301,10 @@ class Theme
         $css = ':root{'.collect($vars)->map(fn ($value, $name) => "{$name}:{$value}")->implode(';').'}';
 
         $css .= <<<'CSS'
+body.ef-themed .mbdg{background:var(--ef-badge-sale-bg);color:var(--ef-badge-sale-text)}
+body.ef-themed .mbdg.new{background:var(--ef-badge-new-bg);color:var(--ef-badge-new-text)}
+body.ef-themed .mbdg.hot{background:var(--ef-badge-hot-bg);color:var(--ef-badge-hot-text)}
+body.ef-themed .mbdg.ef-bdg-out{background:#6c757d;color:#fff}
 body.ef-themed{font-family:var(--ef-font-body);color:var(--ef-text)}
 body.ef-themed h1,body.ef-themed h2,body.ef-themed h3,body.ef-themed h4,body.ef-themed h5,body.ef-themed h6,
 body.ef-themed .stitle,body.ef-themed .htitle,body.ef-themed .sptitle,body.ef-themed .mtit,body.ef-themed .ef-pagehead-title,
@@ -481,6 +491,52 @@ CSS;
     }
 
     /**
+     * Which preset these saved settings came from: the one recorded when it was applied (settings "preset"),
+     * otherwise a preset whose values all match. Only keys that were saved are compared, so options added to the
+     * theme later (e.g. badge colours) do not hide it. "customized" = colours / fonts changed after applying.
+     *
+     * @param  array<string, mixed>  $saved  raw saved settings (not merged with the defaults)
+     * @return array{key: string, name: string, applied_at: ?string, customized: bool}|null
+     */
+    public static function presetInfo(array $saved): ?array
+    {
+        $presets = self::presets();
+        $values = Arr::dot(Arr::except($saved, ['preset']));
+        $matches = function (string $key) use ($presets, $values): bool {
+            $common = array_intersect_key(Arr::dot($presets[$key]['settings']), $values);
+
+            // Too few saved values in common (e.g. a fresh default theme) proves nothing
+            return count($common) >= 10 && collect($common)->every(fn ($value, $path) => strtolower((string) $value) === strtolower((string) $values[$path]));
+        };
+        $key = $saved['preset']['key'] ?? null;
+
+        if (! $key || ! isset($presets[$key])) {
+            $key = collect(array_keys($presets))->first($matches);
+
+            if (! $key) {
+                return null;
+            }
+        }
+
+        return [
+            'key' => $key,
+            'name' => $presets[$key]['name'],
+            'applied_at' => $saved['preset']['applied_at'] ?? null,
+            'customized' => ! $matches($key),
+        ];
+    }
+
+    public function livePreset(): ?array
+    {
+        return self::presetInfo($this->saved());
+    }
+
+    public function draftPreset(): ?array
+    {
+        return ($draft = $this->draft()) !== null ? self::presetInfo($draft) : null;
+    }
+
+    /**
      * Text / background pairs that are hard to read (WCAG contrast ratio below the minimum).
      *
      * @param  array<string, mixed>|null  $settings
@@ -521,6 +577,9 @@ CSS;
             ['Page title banner text', 'header.pagehead_text', 'header.pagehead_bg', 3.0],
             ['Footer text', 'footer.text', 'footer.bg', 4.5],
             ['Footer headings', 'footer.heading', 'footer.bg', 3.0],
+            ['Discount badge', 'badges.sale_text', 'badges.sale_bg', 3.0],
+            ['New badge', 'badges.new_text', 'badges.new_bg', 3.0],
+            ['Hot badge', 'badges.hot_text', 'badges.hot_bg', 3.0],
         ];
 
         if (! empty($settings['header']['topbar'])) {

@@ -109,6 +109,8 @@ class AccountController extends Controller
                 ->paginate(10)
                 ->withQueryString(),
             'statuses' => OrderStatus::cases(),
+            // Orders per status for the tab counts (mobile)
+            'statusCounts' => efront()->customer()->orders()->toBase()->selectRaw('status, COUNT(*) as total')->groupBy('status')->pluck('total', 'status'),
         ]);
     }
 

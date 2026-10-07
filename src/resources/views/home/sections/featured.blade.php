@@ -14,7 +14,7 @@
             <div class="row g-4" id="mgrid">
                 @foreach($featured as $product)
                     <div class="col-6 col-lg-4 mwrap" data-c="{{ $product->category_id }}" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 80 }}">
-                        <x-efront::product-card :product="$product" />
+                        <x-efront::product-card :product="$product" class="h-100" />
                     </div>
                 @endforeach
             </div>

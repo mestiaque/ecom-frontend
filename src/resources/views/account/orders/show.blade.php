@@ -19,6 +19,8 @@
         @include('efront::partials.order-tracking')
 
         <div class="d-flex flex-wrap gap-2 mt-3">
+            <a href="{{ \ME\Efront\Http\Controllers\InvoiceController::url($order) }}" target="_blank" class="ef-btn-outline ef-btn-sm"><i class="fas fa-file-invoice me-1"></i>Invoice</a>
+            <a href="{{ \ME\Efront\Http\Controllers\InvoiceController::url($order, download: true) }}" download class="ef-btn-outline ef-btn-sm"><i class="fas fa-file-pdf me-1"></i>Download PDF</a>
             @if($order->status === \ME\Ecom\Enums\OrderStatus::Pending)
                 <form method="POST" action="{{ route('efront.account.orders.cancel', $order) }}" onsubmit="return confirm('Cancel this order?')">
                     @csrf
@@ -73,6 +75,9 @@
                 @if($order->shippingZone)<p class="text-muted small mb-3">{{ $order->shippingZone->name }} @if($order->shippingZone->delivery_time) · {{ $order->shippingZone->delivery_time }} @endif</p>@endif
                 <h5 class="ef-summary-title mt-3">Payment</h5>
                 <p class="mb-1">{{ $order->payment_method->label() }}</p>
+                @if(app(\ME\Ecom\Services\Payments\PaymentManager::class)->canPayOnline($order))
+                    <a href="{{ \ME\Efront\Http\Controllers\PaymentController::payUrl($order) }}" class="btn-red btn-sm my-2"><i class="fas fa-lock"></i>Pay now</a>
+                @endif
                 @if($order->customer_note)
                     <h5 class="ef-summary-title mt-3">Note</h5>
                     <p class="mb-0 text-muted">{!! nl2br(e($order->customer_note)) !!}</p>

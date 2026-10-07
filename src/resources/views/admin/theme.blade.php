@@ -27,6 +27,7 @@
 @endpush
 
 @push('css')
+<style>.ef-badge-sample{display:inline-block;border-radius:7px;padding:3px 11px;font-size:.72rem;font-weight:700}</style>
 <style>
     .ef-theme-tabs .nav-link { font-weight: 600; font-size: .86rem; }
     .ef-color .form-control-color { max-width: 46px; padding: 3px; }
@@ -53,6 +54,9 @@
     .ef-preset-swatch { height: 86px; position: relative; display: flex; align-items: flex-end; gap: 6px; padding: 10px; }
     .ef-preset-swatch span { width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); box-shadow: 0 2px 6px rgba(0,0,0,.15); }
     .ef-preset-btn { position: absolute; right: 10px; top: 10px; border-radius: 50px; padding: 4px 12px; font-size: .75rem; font-weight: 600; border: 0; }
+    .ef-preset.is-live { border: 2px solid #198754 !important; }
+    .ef-preset.is-draft { border: 2px dashed #fd7e14 !important; }
+    .ef-preset-state { position: absolute; left: 10px; top: 10px; border-radius: 50px; padding: 3px 10px; font-size: .7rem; font-weight: 700; color: #fff; }
     .ef-contrast-item.is-ok { display: none; }
 </style>
 @endpush
@@ -83,6 +87,26 @@
             @endforeach
         </ul>
     </div>
+
+    {{-- Last applied preset (live, and in the draft when it differs) --}}
+    @if($livePreset || $editPreset)
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3 small">
+            <span class="text-muted"><i class="fas fa-swatchbook me-1"></i>Preset:</span>
+            @if($livePreset)
+                <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-2">
+                    <i class="fas fa-circle me-1" style="font-size:.5rem"></i>Live: {{ $livePreset['name'] }}@if($livePreset['customized']) <span class="fw-normal">· customized</span>@endif
+                    @if($livePreset['applied_at'])<span class="fw-normal text-muted"> · applied {{ \Illuminate\Support\Carbon::parse($livePreset['applied_at'])->format('d M Y') }}</span>@endif
+                </span>
+            @else
+                <span class="badge rounded-pill bg-light text-muted border px-3 py-2">Live: custom theme</span>
+            @endif
+            @if($hasDraft && $editPreset && ($editPreset['key'] !== ($livePreset['key'] ?? null) || $editPreset['customized'] !== ($livePreset['customized'] ?? null)))
+                <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis border border-warning-subtle px-3 py-2">
+                    <i class="fas fa-pen me-1"></i>In draft: {{ $editPreset['name'] }}@if($editPreset['customized']) <span class="fw-normal">· customized</span>@endif
+                </span>
+            @endif
+        </div>
+    @endif
 
     <ul class="nav nav-pills ef-theme-tabs mb-3 flex-nowrap overflow-auto" role="tablist">
         @foreach(['general' => ['fas fa-sliders-h', 'Style & Fonts'], 'colors' => ['fas fa-palette', 'Colours'], 'header' => ['fas fa-window-maximize', 'Header & Footer'], 'buttons' => ['fas fa-hand-pointer', 'Buttons & Icons'], 'card' => ['fas fa-th-large', 'Product Card'], 'home' => ['fas fa-home', 'Home Page'], 'presets' => ['fas fa-swatchbook', 'Presets'], 'history' => ['fas fa-history', 'History']] as $tab => [$icon, $name])
@@ -167,6 +191,27 @@
                                 <label class="form-label small fw-semibold mb-1">Glow strength: <span data-range-value>{{ old('theme.glass.glow', $theme['glass']['glow']) }}</span>%</label>
                                 <input type="range" min="0" max="100" name="theme[glass][glow]" value="{{ old('theme.glass.glow', $theme['glass']['glow']) }}" class="form-range" oninput="this.previousElementSibling.querySelector('[data-range-value]').textContent = this.value">
                             </div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="col-12">
+                    <div class="card glass-card"><div class="card-body">
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                            <h6 class="fw-bold mb-0 me-2">Product badges</h6>
+                            {{-- Live sample, painted from the fields below --}}
+                            <span class="ef-badge-sample" data-badge-preview="sale">-12%</span>
+                            <span class="ef-badge-sample" data-badge-preview="new"><i class="fas fa-star"></i> New</span>
+                            <span class="ef-badge-sample" data-badge-preview="hot"><i class="fas fa-fire"></i> Hot</span>
+                        </div>
+                        <div class="row">
+                            @foreach(['sale' => 'Discount (-12%, campaign deal)', 'new' => 'New arrival', 'hot' => 'Hot (featured)'] as $key => $label)
+                                <div class="col-md-4">
+                                    <div class="row g-2">
+                                        <div class="col-6">@include('efront::admin.partials.color', ['name' => "badges.{$key}_bg", 'label' => $label, 'value' => $theme['badges']["{$key}_bg"]])</div>
+                                        <div class="col-6">@include('efront::admin.partials.color', ['name' => "badges.{$key}_text", 'label' => 'Text', 'value' => $theme['badges']["{$key}_text"]])</div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div></div>
                 </div>
@@ -369,8 +414,12 @@
                     @php($ps = $preset['settings'])
                     @php($swatchBg = ($ps['style'] ?? 'glass') === 'glass' ? 'linear-gradient(135deg,'.($ps['glass']['bg_1'] ?? '#fff').','.($ps['glass']['bg_3'] ?? '#fff').')' : '#ffffff')
                     <div class="col-sm-6 col-xl-3">
-                        <div class="card ef-preset h-100 border">
+                        @php($isLive = ($livePreset['key'] ?? null) === $key)
+                        @php($isDraft = $hasDraft && ($editPreset['key'] ?? null) === $key && ! $isLive)
+                        <div @class(['card ef-preset h-100 border', 'is-live' => $isLive, 'is-draft' => $isDraft])>
                             <div class="ef-preset-swatch" style="background: {{ $swatchBg }}">
+                                @if($isLive)<span class="ef-preset-state bg-success"><i class="fas fa-check me-1"></i>Live</span>@endif
+                                @if($isDraft)<span class="ef-preset-state" style="background:#fd7e14"><i class="fas fa-pen me-1"></i>In draft</span>@endif
                                 @foreach(array_filter([$ps['colors']['primary'] ?? null, $ps['colors']['secondary'] ?? null, $ps['glass']['orb_2'] ?? null, $ps['footer']['bg'] ?? null]) as $swatch)
                                     <span style="background: {{ $swatch }}"></span>
                                 @endforeach
@@ -510,6 +559,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (label) label.textContent = value('buttons.' + key + '.label') || (key === 'primary' ? 'Shop Now' : '');
     }
     form.querySelectorAll('[data-button-preview]').forEach(b => paintButton(b.dataset.buttonPreview));
+
+    // Live badge previews
+    function paintBadges() {
+        form.querySelectorAll('[data-badge-preview]').forEach(badge => {
+            const key = badge.dataset.badgePreview;
+            badge.style.background = value('badges.' + key + '_bg');
+            badge.style.color = value('badges.' + key + '_text');
+        });
+    }
+    paintBadges();
+    form.addEventListener('input', paintBadges);
+    form.addEventListener('change', paintBadges);
+
     form.addEventListener('input', e => {
         if (e.target.dataset.preview) paintButton(e.target.dataset.preview);
         if (e.target.matches('[data-preview-radius]')) form.querySelectorAll('[data-button-preview]').forEach(b => paintButton(b.dataset.buttonPreview));

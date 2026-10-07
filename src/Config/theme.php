@@ -30,6 +30,16 @@ return [
         'category_label' => '#f6a623', // category name on product cards
     ],
 
+    // Product card badges: discount (-12% / campaign deal), new arrival, hot (featured)
+    'badges' => [
+        'sale_bg' => '#e8281a',
+        'sale_text' => '#ffffff',
+        'new_bg' => '#16a34a',
+        'new_text' => '#ffffff',
+        'hot_bg' => '#f6a623',
+        'hot_text' => '#1a1a1a',
+    ],
+
     // Glass style only: page background gradient and the five glowing orbs
     'glass' => [
         'bg_1' => '#fff4ee',

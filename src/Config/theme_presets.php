@@ -28,6 +28,7 @@ return [
             'footer' => ['bg' => '#1a1a1a', 'text' => '#999999', 'heading' => '#ffffff'],
             'buttons' => $buttons('#e8281a', '#ffffff', '#f6a623', '#1a1a1a'),
             'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#e8281a', 'sale_text' => '#ffffff', 'new_bg' => '#16a34a', 'new_text' => '#ffffff', 'hot_bg' => '#f6a623', 'hot_text' => '#1a1a1a'],
         ],
     ],
     'minimal_black' => [
@@ -41,6 +42,7 @@ return [
             'footer' => ['bg' => '#0b0b0b', 'text' => '#9ca3af', 'heading' => '#ffffff'],
             'buttons' => $buttons('#111111', '#ffffff', '#9a7b4f', '#ffffff'),
             'card' => ['image_bg' => '#f5f5f4'],
+            'badges' => ['sale_bg' => '#111111', 'sale_text' => '#ffffff', 'new_bg' => '#0f766e', 'new_text' => '#ffffff', 'hot_bg' => '#9a7b4f', 'hot_text' => '#ffffff'],
         ],
     ],
     'fresh_green' => [
@@ -55,6 +57,7 @@ return [
             'footer' => ['bg' => '#052e16', 'text' => '#a7c4b2', 'heading' => '#ffffff'],
             'buttons' => $buttons('#16a34a', '#ffffff', '#f59e0b', '#1a1a1a'),
             'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#dc2626', 'sale_text' => '#ffffff', 'new_bg' => '#0e7490', 'new_text' => '#ffffff', 'hot_bg' => '#f59e0b', 'hot_text' => '#1a1a1a'],
         ],
     ],
     'ocean_blue' => [
@@ -69,6 +72,7 @@ return [
             'footer' => ['bg' => '#0b1226', 'text' => '#94a3b8', 'heading' => '#ffffff'],
             'buttons' => $buttons('#2563eb', '#ffffff', '#06b6d4', '#0f172a'),
             'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#e11d48', 'sale_text' => '#ffffff', 'new_bg' => '#0d9488', 'new_text' => '#ffffff', 'hot_bg' => '#f59e0b', 'hot_text' => '#0f172a'],
         ],
     ],
     'royal_purple' => [
@@ -83,6 +87,7 @@ return [
             'footer' => ['bg' => '#170b29', 'text' => '#b9a8d6', 'heading' => '#ffffff'],
             'buttons' => $buttons('#7c3aed', '#ffffff', '#ec4899', '#ffffff'),
             'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#db2777', 'sale_text' => '#ffffff', 'new_bg' => '#7c3aed', 'new_text' => '#ffffff', 'hot_bg' => '#f59e0b', 'hot_text' => '#1e1033'],
         ],
     ],
     'eid' => [
@@ -97,6 +102,7 @@ return [
             'footer' => ['bg' => '#022c22', 'text' => '#a7c4b2', 'heading' => '#fde68a'],
             'buttons' => $buttons('#047857', '#ffffff', '#d4a017', '#1a1a1a'),
             'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#b91c1c', 'sale_text' => '#ffffff', 'new_bg' => '#047857', 'new_text' => '#ffffff', 'hot_bg' => '#d4a017', 'hot_text' => '#1a1a1a'],
         ],
     ],
     'puja' => [
@@ -111,6 +117,7 @@ return [
             'footer' => ['bg' => '#2a0a0a', 'text' => '#d6b4a2', 'heading' => '#fde68a'],
             'buttons' => $buttons('#c2410c', '#ffffff', '#eab308', '#1a1a1a'),
             'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#b91c1c', 'sale_text' => '#ffffff', 'new_bg' => '#0f766e', 'new_text' => '#ffffff', 'hot_bg' => '#eab308', 'hot_text' => '#2a0f05'],
         ],
     ],
     'boishakh' => [
@@ -124,6 +131,66 @@ return [
             'footer' => ['bg' => '#450a0a', 'text' => '#fecaca', 'heading' => '#ffffff'],
             'buttons' => $buttons('#b91c1c', '#ffffff', '#f59e0b', '#1c1917'),
             'card' => ['image_bg' => '#fffaf5'],
+            'badges' => ['sale_bg' => '#b91c1c', 'sale_text' => '#ffffff', 'new_bg' => '#15803d', 'new_text' => '#ffffff', 'hot_bg' => '#f59e0b', 'hot_text' => '#1c1917'],
+        ],
+    ],
+    'bijoy' => [
+        'name' => 'Bijoy Dibos',
+        'description' => 'Flag green & red — Victory Day, Independence Day and other national days.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Poppins', 'body' => 'Hind Siliguri', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#006a4e', 'secondary' => '#f42a41', 'heading' => '#0b2419', 'text' => '#44564d', 'price' => '#006a4e', 'label' => '#d0172f', 'category_label' => '#d0172f'],
+            'glass' => ['bg_1' => '#ecfdf5', 'bg_2' => '#fff1f2', 'bg_3' => '#f0fdf4', 'bg_4' => '#fef2f2', 'orb_1' => '#006a4e', 'orb_2' => '#f42a41', 'orb_3' => '#10b981', 'orb_4' => '#fb7185', 'orb_5' => '#22c55e', 'glow' => 70],
+            'header' => ['topbar_bg' => '#00382a', 'topbar_text' => '#d1fae5', 'navbar_bg' => '#ffffff', 'navbar_text' => '#0b2419', 'pagehead_bg' => '#006a4e', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#002b20', 'text' => '#a7c4b8', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#006a4e', '#ffffff', '#d0172f', '#ffffff'),
+            'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#d0172f', 'sale_text' => '#ffffff', 'new_bg' => '#006a4e', 'new_text' => '#ffffff', 'hot_bg' => '#f59e0b', 'hot_text' => '#0b2419'],
+        ],
+    ],
+    'shok' => [
+        'name' => 'Shok Dibos',
+        'description' => 'Black & white, calm and plain — 21 February, 15 August, 14 December.',
+        'settings' => [
+            'style' => 'classic',
+            'fonts' => ['heading' => 'Lora', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#111111', 'secondary' => '#525252', 'heading' => '#0a0a0a', 'text' => '#4b4b4b', 'price' => '#111111', 'label' => '#404040', 'category_label' => '#525252'],
+            'header' => ['topbar_bg' => '#000000', 'topbar_text' => '#d4d4d4', 'navbar_bg' => '#ffffff', 'navbar_text' => '#0a0a0a', 'pagehead_bg' => '#171717', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#0a0a0a', 'text' => '#a3a3a3', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#111111', '#ffffff', '#525252', '#ffffff'),
+            'card' => ['image_bg' => '#f5f5f5'],
+            'badges' => ['sale_bg' => '#111111', 'sale_text' => '#ffffff', 'new_bg' => '#525252', 'new_text' => '#ffffff', 'hot_bg' => '#d4d4d4', 'hot_text' => '#111111'],
+        ],
+    ],
+    'borsha' => [
+        'name' => 'Borsha',
+        'description' => 'Rainy teal & indigo glass — monsoon offers, a cool calm look.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Outfit', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#0f766e', 'secondary' => '#4f46e5', 'heading' => '#0b1f24', 'text' => '#475b63', 'price' => '#0f766e', 'label' => '#4338ca', 'category_label' => '#0e7490'],
+            'glass' => ['bg_1' => '#ecfeff', 'bg_2' => '#eef2ff', 'bg_3' => '#f0fdfa', 'bg_4' => '#f1f5f9', 'orb_1' => '#14b8a6', 'orb_2' => '#6366f1', 'orb_3' => '#38bdf8', 'orb_4' => '#94a3b8', 'orb_5' => '#22d3ee', 'glow' => 60],
+            'header' => ['topbar_bg' => '#0b2530', 'topbar_text' => '#cffafe', 'navbar_bg' => '#ffffff', 'navbar_text' => '#0b1f24', 'pagehead_bg' => '#134e4a', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#081a20', 'text' => '#94b4bc', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#0f766e', '#ffffff', '#4f46e5', '#ffffff'),
+            'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#e11d48', 'sale_text' => '#ffffff', 'new_bg' => '#0f766e', 'new_text' => '#ffffff', 'hot_bg' => '#4f46e5', 'hot_text' => '#ffffff'],
+        ],
+    ],
+    'mega_sale' => [
+        'name' => 'Mega Sale 11.11',
+        'description' => 'Hot pink & orange, loud and bright — flash sales, 11.11, Black Friday.',
+        'settings' => [
+            'style' => 'glass',
+            'fonts' => ['heading' => 'Montserrat', 'body' => 'Inter', 'label_style' => 'caps'],
+            'colors' => ['primary' => '#db2777', 'secondary' => '#f97316', 'heading' => '#1f0a17', 'text' => '#5b4352', 'price' => '#db2777', 'label' => '#c2410c', 'category_label' => '#c2410c'],
+            'glass' => ['bg_1' => '#fdf2f8', 'bg_2' => '#fff7ed', 'bg_3' => '#fef2f2', 'bg_4' => '#faf5ff', 'orb_1' => '#ec4899', 'orb_2' => '#f97316', 'orb_3' => '#facc15', 'orb_4' => '#a855f7', 'orb_5' => '#f43f5e', 'glow' => 85],
+            'header' => ['topbar_bg' => '#500724', 'topbar_text' => '#fce7f3', 'navbar_bg' => '#ffffff', 'navbar_text' => '#1f0a17', 'pagehead_bg' => '#831843', 'pagehead_text' => '#ffffff'],
+            'footer' => ['bg' => '#2a0616', 'text' => '#d8b4c6', 'heading' => '#ffffff'],
+            'buttons' => $buttons('#db2777', '#ffffff', '#f97316', '#1f0a17'),
+            'card' => ['image_bg' => '#ffffff'],
+            'badges' => ['sale_bg' => '#db2777', 'sale_text' => '#ffffff', 'new_bg' => '#7c3aed', 'new_text' => '#ffffff', 'hot_bg' => '#f97316', 'hot_text' => '#1f0a17'],
         ],
     ],
 ];

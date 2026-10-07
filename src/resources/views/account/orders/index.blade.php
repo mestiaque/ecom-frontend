@@ -5,10 +5,13 @@
 
 @section('account')
     <div class="fcard">
-        <div class="ef-status-filter mb-3">
-            <a href="{{ route('efront.account.orders') }}" @class(['filtbtn', 'active' => ! request('status')])>All</a>
+        {{-- Desktop: wrapping pills. Mobile: one swipeable row with counts, the active tab scrolled into view (efront.js) --}}
+        <div class="ef-status-filter mb-3" data-tab-scroller>
+            <a href="{{ route('efront.account.orders') }}" @class(['filtbtn', 'active' => ! request('status')])>All <span class="ef-tab-count">{{ $statusCounts->sum() }}</span></a>
             @foreach($statuses as $status)
-                <a href="{{ route('efront.account.orders', ['status' => $status->value]) }}" @class(['filtbtn', 'active' => request('status') === $status->value])>{{ $status->label() }}</a>
+                <a href="{{ route('efront.account.orders', ['status' => $status->value]) }}" @class(['filtbtn', 'active' => request('status') === $status->value])>
+                    {{ $status->label() }} <span class="ef-tab-count">{{ $statusCounts[$status->value] ?? 0 }}</span>
+                </a>
             @endforeach
         </div>
         @include('efront::account.orders.partials.table')

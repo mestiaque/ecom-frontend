@@ -39,6 +39,8 @@ class ThemeController extends Controller
             'draftSavedAt' => $this->theme->draftSavedAt(),
             'versions' => ThemeVersion::with('user:id,name')->latest('id')->take(ThemeVersion::KEEP)->get(),
             'presets' => Theme::presets(),
+            'livePreset' => $this->theme->livePreset(),
+            'editPreset' => $this->theme->draftPreset() ?? $this->theme->livePreset(),
             'contrastIssues' => $this->theme->contrastIssues($editing),
             'contrastChecks' => Theme::contrastChecks($editing),
             'previewPages' => array_filter([
@@ -60,6 +62,11 @@ class ThemeController extends Controller
         $request->validate(['action' => ['required', Rule::in(['draft', 'publish'])], 'note' => 'nullable|string|max:120']);
         $settings = ThemeForm::validate($request->only(['theme', 'section_order']));
 
+        // The form has no preset field: keep the record of the last applied preset
+        if ($preset = $this->theme->editable()['preset'] ?? null) {
+            $settings['preset'] = $preset;
+        }
+
         if ($request->input('action') === 'draft') {
             $this->theme->saveDraft($settings);
             $this->theme->startPreview($settings);
@@ -68,7 +75,15 @@ class ThemeController extends Controller
         }
 
         $before = Arr::dot($this->theme->published());
-        $version = $this->theme->publish($settings, $request->input('note'), auth()->id());
+        $note = $request->input('note');
+
+        // Publishing a newly applied preset: say so in the history when no note was typed
+        $preset = $settings['preset']['key'] ?? null;
+        if (blank($note) && $preset && $preset !== ($this->theme->published()['preset']['key'] ?? null)) {
+            $note = 'Preset: '.Theme::presets()[$preset]['name'];
+        }
+
+        $version = $this->theme->publish($settings, $note, auth()->id());
         me_change_log('Storefront theme published (version #'.$version->id.')', 'efront.theme.publish')->record($before, Arr::dot($this->theme->published()));
 
         return $this->publishedRedirect('Theme published — your store now uses it.');
@@ -115,6 +130,7 @@ class ThemeController extends Controller
         abort_unless(isset(Theme::presets()[$preset]), 404);
 
         $settings = Theme::withPreset($this->theme->editable(), $preset);
+        $settings['preset'] = ['key' => $preset, 'applied_at' => now()->toIso8601String()];
         $this->theme->saveDraft($settings);
         $this->theme->startPreview($settings);
 
@@ -153,6 +169,10 @@ class ThemeController extends Controller
             $settings = ThemeForm::validate(ThemeForm::toInput(Theme::merge($settings)));
         } catch (ValidationException $e) {
             return back()->with('error', 'The theme file has invalid values: '.$e->validator->errors()->first());
+        }
+
+        if (isset(Theme::presets()[$data['settings']['preset']['key'] ?? $data['preset']['key'] ?? ''])) {
+            $settings['preset'] = $data['settings']['preset'] ?? $data['preset'];
         }
 
         $this->theme->saveDraft($settings);

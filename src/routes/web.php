@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\Route;
 use ME\Efront\Http\Controllers\Account\AccountController;
 use ME\Efront\Http\Controllers\Account\AddressController;
@@ -8,7 +9,9 @@ use ME\Efront\Http\Controllers\CartController;
 use ME\Efront\Http\Controllers\CheckoutController;
 use ME\Efront\Http\Controllers\FaqController;
 use ME\Efront\Http\Controllers\HomeController;
+use ME\Efront\Http\Controllers\InvoiceController;
 use ME\Efront\Http\Controllers\PageController;
+use ME\Efront\Http\Controllers\PaymentController;
 use ME\Efront\Http\Controllers\ProductController;
 use ME\Efront\Http\Controllers\ReviewController;
 use ME\Efront\Http\Controllers\ShopController;
@@ -40,6 +43,12 @@ Route::middleware('web')->prefix(config('efront.route_prefix'))->name('efront.')
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'store'])->middleware('throttle:efront-checkout')->name('checkout.store');
     Route::get('/checkout/success/{order:order_number}', [CheckoutController::class, 'success'])->middleware('signed')->name('checkout.success');
+    Route::get('/order/{order:order_number}/invoice', [InvoiceController::class, 'show'])->middleware('signed')->name('invoice');
+
+    // Online payment (bKash / SSLCommerz). Pay & switch links are signed; see PaymentController
+    Route::get('/payment/{order:order_number}/pay', [PaymentController::class, 'pay'])->middleware(['signed', 'throttle:efront-checkout'])->name('payment.pay');
+    Route::post('/payment/{order:order_number}/cod', [PaymentController::class, 'switchToCod'])->middleware('signed')->name('payment.cod');
+    Route::get('/payment/done/{transaction}/{token}', [PaymentController::class, 'done'])->name('payment.done');
 
     // Content
     Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page');
@@ -93,3 +102,10 @@ Route::middleware('web')->prefix(config('efront.route_prefix'))->name('efront.')
 Route::middleware('web')->group(function () {
     Route::fallback(fn () => abort(404))->name('efront.fallback');
 });
+
+// Gateway return URL — outside the "web" group on purpose: no session (a cross-site POST would replace the customer's
+// session cookie) and no CSRF token (the gateway posts it). Protected by the secret token of the payment try.
+Route::match(['get', 'post'], trim(config('efront.route_prefix'), '/').'/payment/callback/{transaction}/{token}/{result?}', [PaymentController::class, 'callback'])
+    ->middleware(SubstituteBindings::class)
+    ->whereIn('result', ['success', 'fail', 'cancel'])
+    ->name('efront.payment.callback');

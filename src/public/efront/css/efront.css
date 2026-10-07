@@ -126,6 +126,7 @@ section { padding: 72px 0; }
 .mimg > a { display: block; height: 100%; }
 .mhrt { border: 0; }
 .mhrt.active, .mhrt.active:hover { color: var(--primary); }
+.madd { flex-shrink: 0; } /* never squeezed by a long price */
 .madd:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
 .ef-bdg-out { background: #6c757d !important; color: #fff !important; }
 .mprice small[hidden] { display: none; }
@@ -137,7 +138,17 @@ section { padding: 72px 0; }
     .mtit { font-size: .9rem; }
     .mdesc { display: none; }
     .mprice { font-size: 1rem; }
-    .madd { width: 32px; height: 32px; font-size: .85rem; }
+    /* Small cards: the "+" sits in the card's bottom-right corner; the price runs full width above it,
+       the old price and the stars (the lines beside the button) keep clear of it */
+    .ef-card { position: relative; }
+    .ef-card .madd { position: absolute; right: 10px; bottom: 10px; z-index: 2; width: 32px; height: 32px; font-size: .85rem; }
+    .ef-card .madd:hover { transform: scale(1.08); }
+    .ef-card .mfoot { display: block; }
+    .ef-card .mprice small { display: block; margin: 1px 0 0; font-size: .7rem; max-width: calc(100% - 36px); }
+    /* keep the line: same layout with or without a discount (!important beats Bootstrap's [hidden] rule) */
+    .ef-card .mprice small[hidden] { display: block !important; visibility: hidden; }
+    .ef-card .ef-stars { font-size: .56rem; letter-spacing: 0; margin-top: 3px; display: inline-block; max-width: calc(100% - 36px); }
+    .ef-card .ef-stars .ef-stars-count { font-size: .6rem; margin-left: 1px; }
 }
 
 /* ---------- Product mini card ---------- */
@@ -201,7 +212,7 @@ section { padding: 72px 0; }
 
 /* ---------- Page header ---------- */
 .ef-pagehead {
-    position: relative; padding: 54px 0; background: linear-gradient(135deg, #1a0000 0%, #2d0000 100%);
+    position: relative; padding: 24px 0; background: linear-gradient(135deg, #1a0000 0%, #2d0000 100%);
     background-image: linear-gradient(135deg, rgba(26, 0, 0, .92), rgba(45, 0, 0, .78)), var(--ef-head-img, none);
     background-size: cover; background-position: center; overflow: hidden;
 }
@@ -672,4 +683,35 @@ label.ef-address-option { cursor: pointer; }
     #searchOv { padding: 0 10px 20px; }
     #searchOv .sovclose { top: 10px; right: 10px; }
     #searchOv .sovbox h4 { padding: 0 40px; }
+}
+
+/* ---------- Online payment (checkout tile badge, result page) ---------- */
+.ef-pay-sandbox { display: inline-block; font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: rgba(var(--ef-secondary-rgb), .18); color: #a1620a; }
+.ef-pay-pending, .ef-pay-done { border-radius: 16px; padding: 16px 18px; }
+.ef-pay-pending { background: rgba(var(--ef-secondary-rgb), .12); border: 1px solid rgba(var(--ef-secondary-rgb), .35); color: #7a4a06; }
+.ef-pay-pending .btn-red, .ef-pay-pending .ef-btn-outline { padding: 8px 16px; font-size: .86rem; }
+.ef-pay-done { display: flex; gap: 12px; align-items: center; background: rgba(45, 106, 79, .1); border: 1px solid rgba(45, 106, 79, .3); color: #1e5a3f; }
+
+/* ---------- Order status tabs: one swipeable row on mobile ---------- */
+.ef-tab-count { display: none; }
+@media (max-width: 767px) {
+    .ef-status-filter {
+        flex-wrap: nowrap; gap: 6px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+        position: relative; /* offsetLeft of the tabs is measured from the row (efront.js centres the active one) */
+        margin: -8px -12px 4px; padding: 8px 12px 14px; /* room for the active pill's shadow: a scrolling row clips it */
+        scroll-padding-inline: 12px; /* snap to the content edge, not the padding edge */
+        /* fade on the right = there are more tabs to swipe to */
+        -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+        mask-image: linear-gradient(90deg, #000 88%, transparent);
+    }
+    .ef-status-filter.is-end { -webkit-mask-image: none; mask-image: none; }
+    .ef-status-filter::-webkit-scrollbar { display: none; }
+    .ef-status-filter .filtbtn { flex-shrink: 0; white-space: nowrap; scroll-snap-align: start; padding: 6px 12px; font-size: .76rem; }
+    .ef-status-filter .filtbtn.active,
+    .ef-glass .ef-status-filter .filtbtn.active { box-shadow: 0 3px 8px rgba(var(--ef-primary-rgb), .25); }
+    .ef-tab-count {
+        display: inline-block; min-width: 18px; margin-left: 4px; padding: 0 5px; border-radius: 9px;
+        font-size: .66rem; line-height: 16px; text-align: center; background: rgba(0, 0, 0, .07); color: inherit;
+    }
+    .filtbtn.active .ef-tab-count { background: rgba(255, 255, 255, .28); }
 }

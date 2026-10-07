@@ -7,9 +7,9 @@
 @if($product->stock <= 0)
     <div class="mbdg ef-bdg-out">Out of stock</div>
 @elseif($product->activeCampaign())
-    <div class="mbdg"><i class="fas fa-bolt"></i> {{ $off ? "-{$off}%" : 'Deal' }}</div>
+    <div class="mbdg sale"><i class="fas fa-bolt"></i> {{ $off ? "-{$off}%" : 'Deal' }}</div>
 @elseif($off)
-    <div class="mbdg hot">-{{ $off }}%</div>
+    <div class="mbdg sale">-{{ $off }}%</div>
 @elseif($product->created_at && $product->created_at->gt(now()->subDays((int) config('efront.new_badge_days', 14))))
     <div class="mbdg new"><i class="fas fa-star"></i> New</div>
 @elseif($product->is_featured)

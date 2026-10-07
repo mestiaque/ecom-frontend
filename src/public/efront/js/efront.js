@@ -80,6 +80,17 @@
     });
     $('#btt').on('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
+    // Swipeable tab rows (mobile): bring the active tab into view, drop the right fade at the end
+    document.querySelectorAll('[data-tab-scroller]').forEach(function (row) {
+        var active = row.querySelector('.active');
+        if (active && row.scrollWidth > row.clientWidth) {
+            row.scrollLeft = active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2;
+        }
+        var edge = function () { row.classList.toggle('is-end', row.scrollLeft + row.clientWidth >= row.scrollWidth - 4); };
+        row.addEventListener('scroll', edge, { passive: true });
+        edge();
+    });
+
     $(document).on('click', '[data-toggle-password]', function () {
         var $input = $(this).siblings('input');
         var show = $input.attr('type') === 'password';

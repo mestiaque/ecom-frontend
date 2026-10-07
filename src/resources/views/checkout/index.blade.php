@@ -79,18 +79,24 @@
                                         <input type="radio" name="payment_method" value="{{ $method->value }}" @checked(old('payment_method', $paymentMethods[0]->value) === $method->value) data-payment-method>
                                         <span class="ef-pay-icon"><i class="{{ $payIcons[$method->value] ?? 'fas fa-wallet' }}"></i></span>
                                         <span class="ef-pay-name">{{ $method->label() }}</span>
+                                        @if($onlineMethods[$method->value] ?? false)<span class="ef-pay-sandbox" title="Test payment — no real money">Sandbox</span>@endif
                                         <i class="fas fa-check-circle ef-pay-check"></i>
                                     </label>
                                 @endforeach
                             </div>
                             @foreach($paymentMethods as $method)
                                 @php($instructions = ecom_setting("payment_{$method->value}_instructions"))
+                                @php($online = array_key_exists($method->value, $onlineMethods))
                                 @if($instructions || $method->value !== 'cod')
                                     <div class="ef-pay-info mt-3" data-payment-info="{{ $method->value }}" hidden>
                                         @if($instructions)
                                             <p class="mb-2"><i class="fas fa-info-circle me-1"></i>{!! nl2br(e($instructions)) !!}</p>
                                         @endif
-                                        @if($method->value !== 'cod')
+                                        @if($online)
+                                            <p class="mb-0 small"><i class="fas fa-lock me-1"></i>After you place the order you will go to the {{ $method->label() }} payment page.
+                                                @if($onlineMethods[$method->value])<strong>Sandbox mode:</strong> a test payment, no real money is taken.@endif
+                                            </p>
+                                        @elseif($method->value !== 'cod')
                                             <label class="flbl" for="trx{{ $method->value }}">Transaction ID <span class="text-muted fw-normal">(if you have paid already)</span></label>
                                             <input type="text" id="trx{{ $method->value }}" name="transaction_id" class="fctrl" value="{{ old('transaction_id') }}" disabled>
                                         @endif

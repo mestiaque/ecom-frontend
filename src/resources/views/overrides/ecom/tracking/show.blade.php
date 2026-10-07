@@ -25,6 +25,10 @@
                     </div>
                 </div>
                 @include('efront::partials.order-tracking', ['history' => $history, 'steps' => $steps])
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <a href="{{ \ME\Efront\Http\Controllers\InvoiceController::url($order) }}" target="_blank" class="ef-btn-outline ef-btn-sm"><i class="fas fa-file-invoice me-1"></i>Invoice</a>
+                    <a href="{{ \ME\Efront\Http\Controllers\InvoiceController::url($order, download: true) }}" download class="ef-btn-outline ef-btn-sm"><i class="fas fa-file-pdf me-1"></i>Download PDF</a>
+                </div>
             </div>
 
             <div class="row g-4">

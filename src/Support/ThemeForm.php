@@ -84,7 +84,7 @@ class ThemeForm
             'section_order.*' => ['string', Rule::in(array_keys($defaults['sections']))],
         ];
 
-        foreach (['colors', 'footer'] as $group) {
+        foreach (['colors', 'footer', 'badges'] as $group) {
             foreach (array_keys($defaults[$group]) as $key) {
                 $rules["theme.{$group}.{$key}"] = $hex;
             }
@@ -164,7 +164,7 @@ class ThemeForm
             ],
         ];
 
-        foreach (['colors', 'footer'] as $group) {
+        foreach (['colors', 'footer', 'badges'] as $group) {
             foreach (array_keys($defaults[$group]) as $key) {
                 $settings[$group][$key] = $color("{$group}.{$key}");
             }

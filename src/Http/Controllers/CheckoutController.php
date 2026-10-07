@@ -4,7 +4,6 @@ namespace ME\Efront\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -12,6 +11,7 @@ use ME\Ecom\Enums\PaymentMethod;
 use ME\Ecom\Models\Order;
 use ME\Ecom\Models\ShippingZone;
 use ME\Ecom\Services\OrderService;
+use ME\Ecom\Services\Payments\PaymentManager;
 use ME\Ecom\Services\ShippingCalculator;
 use ME\Efront\Models\Address;
 use ME\Efront\Support\Cart;
@@ -22,7 +22,7 @@ use ME\Efront\Support\Cart;
  */
 class CheckoutController extends Controller
 {
-    public function __construct(private Cart $cart) {}
+    public function __construct(private Cart $cart, private PaymentManager $payments) {}
 
     public function index(ShippingCalculator $shipping): View|RedirectResponse
     {
@@ -47,6 +47,9 @@ class CheckoutController extends Controller
             'coupon' => $this->cart->couponDiscount($customer),
             'zones' => ShippingZone::active()->get()->each(fn (ShippingZone $zone) => $zone->setAttribute('quote', $shipping->quote($zone, $this->cart->shippingItems(), $subtotal))),
             'paymentMethods' => efront()->paymentMethods(),
+            // Methods paid on the gateway's page (bKash, SSLCommerz) => sandbox?
+            'onlineMethods' => collect(efront()->paymentMethods())->mapWithKeys(fn (PaymentMethod $method) => [$method->value => $this->payments->gateway($method)?->isSandbox()])
+                ->reject(fn ($sandbox) => $sandbox === null)->all(),
         ]);
     }
 
@@ -98,12 +101,20 @@ class CheckoutController extends Controller
         $this->cart->clear();
         $this->notifyCustomer($order);
 
-        return redirect()->to(URL::temporarySignedRoute('efront.checkout.success', now()->addDay(), ['order' => $order->order_number]));
+        // bKash / card: pay on the gateway now; the order stays "unpaid" until the gateway confirms
+        if ($this->payments->canPayOnline($order)) {
+            return redirect()->to(PaymentController::payUrl($order));
+        }
+
+        return redirect()->to(PaymentController::resultUrl($order));
     }
 
     public function success(Order $order): View
     {
-        return view('efront::checkout.success', ['order' => $order->load('items')]);
+        return view('efront::checkout.success', [
+            'order' => $order->load(['items', 'transactions' => fn ($q) => $q->latest('id')]),
+            'canPayOnline' => $this->payments->canPayOnline($order),
+        ]);
     }
 
     /**
