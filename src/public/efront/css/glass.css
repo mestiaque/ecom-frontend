@@ -416,6 +416,11 @@ body.ef-glass.ef-error-minimal,
 .ef-glass .ef-step.done .ef-step-dot { background: var(--green); box-shadow: 0 6px 18px -4px rgba(45, 106, 79, 0.55); }
 .ef-glass .ef-step.current .ef-step-dot { background: var(--primary); box-shadow: 0 0 0 5px rgba(var(--ef-primary-rgb),  0.15), var(--glow-primary); }
 
+/* Mobile menu drawer: frosted like the mini cart (same side, same glass); on desktop it is only the menu bar (no panel) */
+@media (min-width: 992px) {
+    .ef-glass #nav .ef-navdrawer { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; box-shadow: none; }
+}
+
 /* ---------- Hero slider: glass arrows and dots ---------- */
 .ef-glass .ef-hero-slider .swiper-button-prev,
 .ef-glass .ef-hero-slider .swiper-button-next {

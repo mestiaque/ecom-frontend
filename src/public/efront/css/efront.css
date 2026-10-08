@@ -715,3 +715,59 @@ label.ef-address-option { cursor: pointer; }
     }
     .filtbtn.active .ef-tab-count { background: rgba(255, 255, 255, .28); }
 }
+
+/* ---------- Mobile menu: drawer from the right (offcanvas-lg); desktop keeps the menu bar ---------- */
+.ef-burger-close { display: none; }
+.ef-drawer-open .ef-burger-open { display: none; }
+.ef-drawer-open .ef-burger-close { display: inline-block; }
+@media (max-width: 991.98px) {
+    /* #nav is sticky with its own z-index: lift it (and the drawer inside it) above the page backdrop */
+    body.ef-drawer-open #nav { z-index: 1050; }
+    .ef-navdrawer.offcanvas-end { width: min(320px, 86vw); border-left: 1px solid rgba(0, 0, 0, .06); box-shadow: -18px 0 40px rgba(17, 12, 46, .14); }
+    /* The navbar stays visible above the drawer with its logo and the ✕ button: no second header */
+    .ef-navdrawer .offcanvas-header { display: none; }
+    .ef-navdrawer-brand { text-decoration: none; }
+    .ef-navdrawer .offcanvas-body { padding: 10px 14px 24px; display: flex; flex-direction: column; }
+    .ef-navdrawer .navbar-nav { width: 100%; }
+    .ef-navdrawer .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 12px !important; border-radius: 12px; font-weight: 600; }
+    .ef-navdrawer .nav-link.active, .ef-navdrawer .nav-link:hover { background: rgba(var(--ef-primary-rgb), .08); color: var(--primary); }
+    .ef-navdrawer-icon { width: 20px; text-align: center; color: var(--primary); opacity: .85; }
+    .ef-navdrawer .ef-mega-caret { margin-left: auto; }
+    #nav .ef-navdrawer .ef-megamenu, .ef-glass #nav .ef-navdrawer .ef-megamenu {
+        margin: 2px 0 6px 32px !important; padding: 8px 12px 12px; max-height: none; border-radius: 12px;
+        background: rgba(255, 255, 255, .15); /* 15% transparent */ border: 1px solid rgba(255, 255, 255, .9); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+    }
+    #nav .ef-navdrawer .nav-link::after, #nav .ef-navdrawer .nav-link::before { display: none !important; } /* desktop "active" underline */
+    .ef-navdrawer-extra { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(0, 0, 0, .06); }
+    .ef-navdrawer-label { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #999; padding: 0 12px 6px; }
+    .ef-navdrawer-extra a { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 12px; color: var(--dark); text-decoration: none; font-size: .9rem; }
+    .ef-navdrawer-extra a i { width: 20px; text-align: center; color: #999; }
+    .ef-navdrawer-extra a:hover { background: rgba(var(--ef-primary-rgb), .06); color: var(--primary); }
+    .ef-navdrawer-call { margin-top: 8px; background: rgba(var(--ef-primary-rgb), .08); color: var(--primary) !important; font-weight: 600; }
+    .ef-navdrawer-call i { color: var(--primary) !important; }
+}
+@media (min-width: 992px) {
+    /* Desktop: the offcanvas wrapper is just the menu bar */
+    #nav .ef-navdrawer { flex-grow: 1; }
+    #nav .ef-navdrawer .offcanvas-body { flex-grow: 1; }
+    .ef-navdrawer-icon { display: none; }
+}
+
+/* ---------- Mobile navbar: search, cart, account and menu buttons all the same 36px circle ---------- */
+@media (max-width: 991.98px) {
+    #nav .container > .d-flex.order-lg-last { gap: 6px !important; }
+    #nav #navSearchBtn, #nav .ef-navicon, #nav .navbar-toggler {
+        width: 36px; height: 36px; padding: 0; margin: 0; flex-shrink: 0;
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 50%; border: 1px solid rgba(0, 0, 0, .06); background: rgba(255, 255, 255, .6); box-shadow: none;
+        color: #444; font-size: .95rem; line-height: 1;
+    }
+    #nav .navbar-toggler { margin-left: 0 !important; } /* its ms-1 utility added 4px more than the others */
+    #nav .navbar-toggler i { font-size: 1rem !important; }
+    #nav .navbar-toggler:focus { box-shadow: none; }
+    /* The photo / initial fills its circle (no extra ring that made it look bigger) */
+    #nav .ef-nav-account { display: flex; align-items: center; } /* no line box around the button */
+    #nav .ef-navavatar { overflow: hidden; }
+    #nav .ef-navavatar img.ef-avatar { display: block; } /* a photo is an inline <img>: it sat on the text baseline and rose a few px */
+    #nav .ef-navavatar .ef-avatar { width: 100%; height: 100%; box-shadow: none; font-size: .82rem; }
+}

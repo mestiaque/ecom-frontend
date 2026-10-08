@@ -80,6 +80,13 @@
     });
     $('#btt').on('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
+    // Mobile menu drawer: lift the navbar above the backdrop and swap the burger for a close icon
+    var navDrawer = document.getElementById('navmenu');
+    if (navDrawer) {
+        navDrawer.addEventListener('show.bs.offcanvas', function () { syncNavBottom(); document.body.classList.add('ef-drawer-open'); });
+        navDrawer.addEventListener('hidden.bs.offcanvas', function () { document.body.classList.remove('ef-drawer-open'); });
+    }
+
     // Swipeable tab rows (mobile): bring the active tab into view, drop the right fade at the end
     document.querySelectorAll('[data-tab-scroller]').forEach(function (row) {
         var active = row.querySelector('.active');

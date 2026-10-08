@@ -46,18 +46,25 @@
                     @endif
                 </ul>
             </div>
-            <button class="navbar-toggler border-0 ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-label="Menu">
-                <i class="{{ efront_theme()->icon('menu') }}" style="color:var(--primary);font-size:1.35rem;"></i>
+            <button class="navbar-toggler border-0 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#navmenu" aria-controls="navmenu" aria-label="Menu">
+                <i class="{{ efront_theme()->icon('menu') }} ef-burger-open" style="color:var(--primary);font-size:1.35rem;"></i>
+                <i class="fas fa-times ef-burger-close" style="color:var(--primary);font-size:1.35rem;"></i>
             </button>
         </div>
 
-        <div class="collapse navbar-collapse" id="navmenu">
+        {{-- Desktop: the normal menu bar. Mobile (< lg): a drawer from the right, below the navbar (offcanvas-lg) --}}
+        <div class="offcanvas offcanvas-end offcanvas-lg ef-navdrawer" tabindex="-1" id="navmenu" aria-label="Menu">
+            <div class="offcanvas-header">
+                <a href="{{ route('efront.home') }}" class="ef-navdrawer-brand">@include('efront::partials.logo')</a>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#navmenu" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item"><a class="nav-link @if(request()->routeIs('efront.home')) active @endif" href="{{ route('efront.home') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link @if(request()->routeIs('efront.shop')) active @endif" href="{{ route('efront.shop') }}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link @if(request()->routeIs('efront.home')) active @endif" href="{{ route('efront.home') }}"><i class="fas fa-house ef-navdrawer-icon"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link @if(request()->routeIs('efront.shop')) active @endif" href="{{ route('efront.shop') }}"><i class="fas fa-store ef-navdrawer-icon"></i>Shop</a></li>
                 @if(efront()->menuCategories()->isNotEmpty())
                     <li class="nav-item dropdown ef-mega">
-                        <a class="nav-link dropdown-toggle @if(request()->routeIs('efront.category')) active @endif" href="#" data-bs-toggle="dropdown" data-bs-display="static" data-bs-auto-close="outside" aria-expanded="false">Categories <i class="fas fa-chevron-down ef-mega-caret"></i></a>
+                        <a class="nav-link dropdown-toggle @if(request()->routeIs('efront.category')) active @endif" href="#" data-bs-toggle="dropdown" data-bs-display="static" data-bs-auto-close="outside" aria-expanded="false"><i class="fas fa-layer-group ef-navdrawer-icon"></i>Categories <i class="fas fa-chevron-down ef-mega-caret"></i></a>
                         <div class="dropdown-menu ef-dropdown ef-megamenu">
                             <div class="row g-3">
                                 @foreach(efront()->menuCategories() as $menuCategory)
@@ -72,9 +79,27 @@
                         </div>
                     </li>
                 @endif
-                <li class="nav-item"><a class="nav-link" href="{{ route('efront.shop', ['sort' => 'popular']) }}">Best Sellers</a></li>
-                <li class="nav-item"><a class="nav-link @if(request()->routeIs('efront.contact')) active @endif" href="{{ route('efront.contact') }}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('efront.shop', ['sort' => 'popular']) }}"><i class="fas fa-fire ef-navdrawer-icon"></i>Best Sellers</a></li>
+                <li class="nav-item"><a class="nav-link @if(request()->routeIs('efront.contact')) active @endif" href="{{ route('efront.contact') }}"><i class="fas fa-envelope ef-navdrawer-icon"></i>Contact</a></li>
             </ul>
+
+            {{-- Drawer only: account shortcuts and hotline --}}
+            <div class="ef-navdrawer-extra d-lg-none">
+                <div class="ef-navdrawer-label">My account</div>
+                @if($customer)
+                    <a href="{{ route('efront.account.dashboard') }}"><i class="fas fa-gauge"></i>Dashboard</a>
+                    <a href="{{ route('efront.account.orders') }}"><i class="fas fa-box"></i>My Orders</a>
+                    <a href="{{ route('efront.account.wishlist') }}"><i class="fas fa-heart"></i>Wishlist</a>
+                @else
+                    <a href="{{ route('efront.account.login') }}"><i class="fas fa-sign-in-alt"></i>Login</a>
+                    <a href="{{ route('efront.account.register') }}"><i class="fas fa-user-plus"></i>Create account</a>
+                @endif
+                <a href="{{ route('ecom.track.form') }}"><i class="fas fa-location-crosshairs"></i>Track Order</a>
+                @if($phone = efront()->setting('store_phone'))
+                    <a href="tel:{{ preg_replace('~[^0-9+]~', '', $phone) }}" class="ef-navdrawer-call"><i class="fas fa-phone"></i>Call {{ $phone }}</a>
+                @endif
+            </div>
+            </div>
         </div>
     </div>
 </nav>
