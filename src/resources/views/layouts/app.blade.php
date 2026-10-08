@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="@yield('meta_description', efront()->setting('store_tagline', efront()->storeName()))">
     @php($pageTitle = html_entity_decode(trim($__env->yieldContent('title')), ENT_QUOTES))
